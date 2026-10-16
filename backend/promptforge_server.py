@@ -403,6 +403,9 @@ app = FastAPI(
         "POST JSON to /enhance to receive the final prompt and intermediate stages."
     ),
     version="1.0.0",
+    docs_url=None,
+    redoc_url=None,
+    openapi_url=None,
 )
 
 app.add_middleware(
@@ -421,7 +424,6 @@ def root() -> dict[str, str]:
         "status": "ok",
         "health": "/health",
         "enhance": "POST /enhance",
-        "docs": "/docs",
     }
 
 
