@@ -16,8 +16,6 @@ Optional environment variables:
 
 The Python API server and all three agents live in this one file. A .env file is
 optional but recommended for local development; API keys must never be put in frontend code.
-
-Output format: every stage returns plain, human-readable text (no Markdown symbols).
 """
 
 from __future__ import annotations
@@ -108,53 +106,6 @@ def allowed_frontend_origins() -> list[str]:
 
 
 # ---------------------------------------------------------------------------
-# Plain-text clean-up (safety net for the "human readable plain format" rule)
-# ---------------------------------------------------------------------------
-
-_FENCE = re.compile(r"^[ \t]*(```|~~~)[^\n]*\n?", re.M)
-_HEADING = re.compile(r"^[ \t]{0,3}#{1,6}[ \t]*", re.M)
-_RULE = re.compile(r"^[ \t]*([-*_])([ \t]*\1){2,}[ \t]*$", re.M)
-_TABLE_SEP = re.compile(r"^[ \t]*\|?[ \t]*:?-{3,}:?[ \t]*(\|[ \t]*:?-{3,}:?[ \t]*)*\|?[ \t]*$", re.M)
-_QUOTE = re.compile(r"^[ \t]*>[ \t]?", re.M)
-_BULLET = re.compile(r"^([ \t]*)[*\u2022+][ \t]+", re.M)
-_BOLD = re.compile(r"\*\*(.+?)\*\*")
-_ITALIC = re.compile(r"(?<![\w*])\*(?![\s*])([^*\n]+?)(?<![\s*])\*(?![\w*])")
-_STRIKE = re.compile(r"~~(.+?)~~")
-_LINK = re.compile(r"\[([^\]\n]+)\]\((https?://[^)\s]+)\)")
-_BLANKS = re.compile(r"\n{3,}")
-
-
-def to_plain_text(text: str) -> str:
-    """Strip Markdown syntax so the result reads as ordinary plain text.
-
-    The agents are instructed to write plain text already; this guarantees the
-    final output stays clean even if a model slips back into Markdown habits.
-    """
-    text = text.replace("\r\n", "\n")
-    text = _FENCE.sub("", text)
-    text = _TABLE_SEP.sub("", text)
-    lines = []
-    for line in text.split("\n"):
-        stripped = line.strip()
-        if stripped.startswith("|") and stripped.count("|") >= 2:
-            cells = [cell.strip() for cell in stripped.strip("|").split("|")]
-            line = "- " + "; ".join(cell for cell in cells if cell)
-        lines.append(line)
-    text = "\n".join(lines)
-    text = _HEADING.sub("", text)
-    text = _RULE.sub("", text)
-    text = _QUOTE.sub("", text)
-    text = _BULLET.sub(r"\1- ", text)
-    text = _LINK.sub(r"\1 (\2)", text)
-    text = _BOLD.sub(r"\1", text)
-    text = _ITALIC.sub(r"\1", text)
-    text = _STRIKE.sub(r"\1", text)
-    text = text.replace("`", "")
-    text = "\n".join(line.rstrip() for line in text.split("\n"))
-    return _BLANKS.sub("\n\n", text).strip()
-
-
-# ---------------------------------------------------------------------------
 # Groq model and three-agent LangGraph workflow
 # ---------------------------------------------------------------------------
 
@@ -186,8 +137,48 @@ def get_llm():
     return _llm
 
 
+_FENCE_LINE = re.compile(r"^\s*(```|~~~).*$")
+_HEADING = re.compile(r"^\s{0,3}#{1,6}\s*(.*?)\s*#*\s*$")
+_TABLE_DIVIDER = re.compile(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$")
+_RULE = re.compile(r"^\s*([-*_]\s*){3,}$")
+_BULLET = re.compile(r"^(\s*)[*•▪●◦]\s+")
+_BOLD = re.compile(r"(\*\*|__)(?=\S)(.+?)(?<=\S)\1")
+_ITALIC_STAR = re.compile(r"(?<![\w*])\*(?=\S)([^*\n]+?)(?<=\S)\*(?![\w*])")
+_INLINE_CODE = re.compile(r"`([^`\n]+)`")
+_LINK = re.compile(r"\[([^\]\n]+)\]\((https?://[^)\s]+)\)")
+_BLOCKQUOTE = re.compile(r"^\s{0,3}>\s?")
+
+
+def to_plain_text(text: str) -> str:
+    """Strip Markdown and other markup so the result is plain, human-readable text.
+
+    Headings become plain lines, bold/italic/code markers are removed, links keep their
+    visible text and URL, tables become simple lines, and bullets use a plain hyphen.
+    """
+    cleaned: list[str] = []
+    for line in text.replace("\r\n", "\n").split("\n"):
+        if _FENCE_LINE.match(line) or _TABLE_DIVIDER.match(line) or _RULE.match(line):
+            continue
+        heading = _HEADING.match(line)
+        if heading:
+            line = heading.group(1)
+            if line and not line.endswith((":", ".", "?", "!")):
+                line += ":"
+        line = _BLOCKQUOTE.sub("", line)
+        line = _BULLET.sub(r"\1- ", line)
+        if line.count("|") >= 2 and line.strip().startswith("|"):
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            line = " - ".join(cell for cell in cells if cell)
+        line = _LINK.sub(r"\1 (\2)", line)
+        line = _BOLD.sub(r"\2", line)
+        line = _ITALIC_STAR.sub(r"\1", line)
+        line = _INLINE_CODE.sub(r"\1", line)
+        cleaned.append(line.rstrip())
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(cleaned)).strip()
+
+
 def response_text(response) -> str:
-    """Normalize a LangChain AI message into clean plain text and reject empty results."""
+    """Normalize a LangChain AI message into plain text and reject empty results."""
     content = getattr(response, "content", response)
     if content is None:
         result = ""
@@ -233,16 +224,19 @@ General rules for improving the user's prompt:
 - Avoid repeated instructions, unrelated features, and unnecessary dependencies.
 - Return only the revised prompt, without commentary about the revision.
 
-Output format (strict): write in plain, human-readable text, the way a thoughtful person would write
-a clear message to a colleague.
-- Do not use Markdown or any markup: no # headings, no ** or * for emphasis, no backticks or code
-  fences, no tables or pipe characters, no horizontal rules, no quote markers, no emojis.
-- Use short paragraphs separated by one blank line.
-- For sections, write a short plain label on its own line ending with a colon, for example
-  "Goal:", "Context:", "Requirements:", "Output format:", then the content on the lines below it.
-- For lists, put each item on its own line starting with "1.", "2.", "3." for ordered steps, or
-  "- " for unordered items. Keep each item to one or two sentences.
-- Use JSON, code, or any other format only when the user's request explicitly asks for it.
+OUTPUT FORMAT (strict, applies to everything you write):
+- Write the prompt as plain, human-readable text, the way a person would write a clear message or brief.
+- Use ordinary sentences and short paragraphs. Where structure helps, use short plain-text section labels
+  on their own line (for example "Goal:" or "Requirements:") followed by sentences, or simple numbered
+  lines ("1.", "2.") or hyphen lines ("- ") for lists.
+- Do NOT use Markdown or any markup: no # headings, no ** or * emphasis, no backticks or code fences,
+  no tables, no horizontal rules, no blockquotes, no HTML or XML tags.
+- Do NOT output JSON, YAML, or any other machine-readable structure, and do not wrap the answer in quotes
+  or code blocks. The only exception is when the user's original request explicitly asks for a specific
+  format (for example "give me the answer as JSON"); in that case, write the prompt in plain text and
+  state that required format as a plain sentence inside the prompt.
+- Write file names, commands, and short code identifiers inline as ordinary text, without special markers.
+- Do not add a preamble, a closing remark, or any note about how the prompt was improved.
 """.strip()
 
 
@@ -278,7 +272,8 @@ You are Agent 2: Requirements and Edge-Case Specialist.
 Refine Agent 1's prompt without changing its intent. Add task-relevant specifics about:
 - Expected inputs, processing, outputs, and important state transitions.
 - Integration contracts only when known. For frontend/backend tasks, specify HTTP method,
-  request/response JSON shapes, loading states, and errors where applicable. Never invent a route.
+  request/response fields, loading states, and errors where applicable. Describe these in plain
+  sentences or simple lists, not as JSON or code blocks. Never invent a route.
 - Relevant validation, empty input, malformed responses, timeout, network failure, and security cases.
 - Practical tests for the main flow and important failure paths.
 - Observable acceptance criteria. Do not claim tests have already passed without evidence.
@@ -306,11 +301,11 @@ preserves the user's goal, constraints, and deliverable; distinguishes known fac
 contains relevant, actionable requirements; includes acceptance criteria where useful; and has no
 contradictions, invented capabilities, or duplicated rules.
 
-Your final output must read naturally to a person: plain text only, with clear short paragraphs, simple
-labeled sections, and simple numbered or dashed lists, exactly as described in the output format rules
-below. Remove any Markdown symbols left over from earlier drafts. Do not claim tests were run when they
-were not, and do not request hidden chain-of-thought. Return only the final prompt, without a preamble
-or self-evaluation.
+Your final answer must be plain, human-readable text only, with no Markdown or other markup, and in no
+other format unless the user's original request explicitly asked for one. If the draft contains any
+Markdown symbols, JSON, tables, or code fences, rewrite them as ordinary sentences, plain section labels,
+and simple numbered or hyphen lists. Do not claim tests were run when they were not, and do not request
+hidden chain-of-thought. Return only the final prompt, without a preamble or self-evaluation.
 
 {SHARED_RULES}
 """.strip()
