@@ -156,7 +156,7 @@ tbody tr{cursor:pointer;transition:background .2s}tbody tr:hover{background:rgba
 <script>
 (()=>{"use strict";
 // Change this when you deploy the backend.
-const API="http://127.0.0.1:8000",MAX=8000,HK="promptforge.history.v1",MH=20,TMO=120000;
+const API="https://promptforge-ai-agent.onrender.com",MAX=8000,HK="promptforge.history.v1",MH=20,TMO=120000;
 const $=id=>document.getElementById(id),RM=matchMedia("(prefers-reduced-motion:reduce)").matches;
 const inp=$("inp"),go=$("go"),out=$("out"),KEYS=["final","structural","depth_and_edge_cases","formatting_and_precision"];
 let last=null,tab="final",tt,pt,ty,q="";
