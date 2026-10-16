@@ -1,0 +1,5 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+langchain-groq>=1.0
+langgraph>=1.0
+python-dotenv>=1.0
