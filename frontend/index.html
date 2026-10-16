@@ -3,178 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b121a">
+<meta name="theme-color" content="#1f1a5e">
 <meta name="description" content="PromptForge turns rough ideas into clear, ready-to-use prompts.">
 <title>PromptForge</title>
+<script>document.documentElement.className="js"</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#0b121a;--app:#17222d;--side:#1d2c3a;--card:#202f3f;--card2:#26384a;--tx:#eef3f9;--mu:#8da0b5;--ln:rgba(255,255,255,.08);--cy:#19e3ff;--pk:#ff3ea5;--vi:#8b5cff;--ok:#3ee6a0;--er:#ff6b81;--wa:#ffc35a}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;min-height:100vh;background:radial-gradient(70% 60% at 50% 0%,#14303a,transparent 70%),radial-gradient(50% 50% at 50% 100%,#241a36,transparent 70%),var(--bg);color:var(--tx);font:14px/1.55 Poppins,Inter,"Segoe UI",system-ui,sans-serif;padding:28px 16px;-webkit-font-smoothing:antialiased}
+:root{--ink:#1b1340;--pk:#ff5fa2;--sk:#4fd1ff;--sun:#ffd23f;--mt:#5eead4;--vi:#7c5cff;--pp:#fff9f0;--b:3px solid var(--ink);--hs:5px 5px 0 var(--ink);--h:"Dela Gothic One","Hiragino Maru Gothic ProN","Arial Rounded MT Bold",Impact,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;color:var(--ink);font:500 16px/1.6 "M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Segoe UI",system-ui,sans-serif;overflow-x:hidden;background:#2a1a6e}
 button,input,textarea{font:inherit;color:inherit}button{cursor:pointer;background:none;border:0;padding:0}
-:focus-visible{outline:2px solid var(--cy);outline-offset:2px;border-radius:8px}[hidden]{display:none!important}
-.glow{position:fixed;top:14%;bottom:14%;width:9px;border-radius:99px;z-index:0;pointer-events:none;animation:pulse 4s ease-in-out infinite}
-.glow.l{left:max(6px,calc(50% - 650px));background:var(--cy);box-shadow:0 0 18px var(--cy),0 0 70px 14px rgba(25,227,255,.45)}
-.glow.r{right:max(6px,calc(50% - 650px));background:var(--pk);box-shadow:0 0 18px var(--pk),0 0 70px 14px rgba(255,62,165,.45);animation-delay:-2s}
-@keyframes pulse{50%{opacity:.6}}
-.app{position:relative;z-index:1;max-width:1180px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);background:var(--app);border:1px solid var(--ln);border-radius:28px;box-shadow:0 40px 120px rgba(0,0,0,.6);overflow:hidden;animation:up .8s cubic-bezier(.16,1,.3,1) both}
-@keyframes up{from{opacity:0;transform:translateY(22px) scale(.985)}}
-.side{background:var(--side);padding:22px 14px;display:flex;flex-direction:column;gap:6px}
-.logo{display:flex;align-items:center;gap:10px;padding:0 8px 18px;font-weight:700;font-size:16px}
-.logo i{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--cy),var(--vi) 60%,var(--pk));display:grid;place-items:center;font-style:normal;color:#06101a}
-.nav{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;color:var(--mu);text-decoration:none;font-weight:500;transition:.2s}
-.nav:hover{color:var(--tx);background:rgba(255,255,255,.05)}.nav.on{background:#fff;color:#0b121a;box-shadow:0 6px 20px rgba(0,0,0,.3)}
-.nav::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.7}
-.sp{flex:1}
-.me{display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;background:rgba(255,255,255,.04);font-size:12px;color:var(--mu)}
-.me b{display:block;color:var(--tx);font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:var(--wa);flex:none}.dot.on{background:var(--ok);box-shadow:0 0 10px var(--ok)}.dot.off{background:var(--er)}
-.main{padding:22px 24px 28px;display:grid;gap:18px;min-width:0}
-.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.top h1{margin:0 auto 0 0;font-size:20px;font-weight:600}
-.search{display:flex;align-items:center;gap:8px;min-width:220px;padding:0 14px;height:40px;border-radius:12px;background:rgba(0,0,0,.25);border:1px solid var(--ln);color:var(--mu);transition:.2s}
-.search:focus-within{border-color:var(--cy);box-shadow:0 0 0 3px rgba(25,227,255,.15)}.search input{background:none;border:0;outline:0;width:100%}
-.card{background:var(--card);border:1px solid var(--ln);border-radius:20px;padding:20px;min-width:0;position:relative;overflow:hidden}
-.card h2{margin:0 0 2px;font-size:14px;font-weight:600}.card .sub{margin:0 0 14px;font-size:12px;color:var(--mu)}
-.g1{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:18px}
-.white{background:#fff;color:#111a24;border:0;box-shadow:0 20px 50px rgba(0,0,0,.35)}.white .sub{color:#6b7a8c}
-textarea{display:block;width:100%;min-height:210px;resize:vertical;padding:14px;border:1px solid #dfe6ee;border-radius:14px;background:#f6f9fc;color:#111a24;line-height:1.65;transition:.2s}
-textarea::placeholder{color:#8393a6}textarea:focus{outline:0;border-color:#0b8bd9;box-shadow:0 0 0 4px rgba(11,139,217,.14);background:#fff}
-.meta{display:flex;justify-content:space-between;gap:8px;margin:8px 2px 0;font-size:12px;color:#6b7a8c}.meta .w{color:#c27b00}.meta .b{color:#d1243d}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.chip{padding:6px 12px;border-radius:99px;background:#eef3f8;color:#324357;font-size:12px;font-weight:500;transition:.2s}.chip:hover:not(:disabled){background:#111a24;color:#fff;transform:translateY(-1px)}
-.go{position:relative;overflow:hidden;width:100%;height:48px;margin-top:16px;border-radius:14px;background:linear-gradient(100deg,#0d2a3a,#2a1747);color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 10px 26px rgba(80,60,200,.35);transition:.2s}
-.go::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,var(--cy),var(--vi) 55%,var(--pk));opacity:0;transition:opacity .3s}.go:hover:not(:disabled)::before{opacity:1}.go:hover:not(:disabled){transform:translateY(-2px)}.go:active:not(:disabled){transform:scale(.98)}
-.go>*{position:relative}.go:disabled{cursor:progress}.go .spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite;display:none}.go.l .spin{display:block}
-@keyframes rot{to{transform:rotate(360deg)}}
-.lnk{font-size:12px;color:#6b7a8c;text-decoration:underline;text-underline-offset:3px}.lnk:hover{color:#111a24}
-.err{margin-top:12px;padding:10px 12px;border-radius:12px;background:#ffe9ed;color:#b4132f;font-size:13px;animation:sh .4s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-.hero{background:linear-gradient(135deg,#4a35e6 0%,#9a45e0 55%,#ec4a9e 100%);border:0;display:flex;flex-direction:column;min-height:440px;box-shadow:0 20px 60px rgba(150,70,230,.3)}
-.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 80% 0%,rgba(255,255,255,.22),transparent 70%);pointer-events:none}
-.mark{position:absolute;right:14px;top:34px;font-size:clamp(110px,16vw,190px);font-weight:700;line-height:1;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.28);pointer-events:none;user-select:none;font-variant-numeric:tabular-nums}
-.hero>*:not(.mark){position:relative}
-.hh{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.tools{display:flex;gap:6px}.tb{height:32px;padding:0 12px;border-radius:10px;background:rgba(255,255,255,.16);backdrop-filter:blur(8px);font-size:12px;font-weight:500;transition:.2s}.tb:hover:not(:disabled){background:rgba(255,255,255,.3)}.tb:disabled{opacity:.45;cursor:default}
-.tabs{display:flex;gap:4px;margin:14px 0;padding:4px;width:max-content;max-width:100%;overflow-x:auto;border-radius:12px;background:rgba(0,0,0,.22);backdrop-filter:blur(8px)}
-.tab{padding:6px 14px;border-radius:9px;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.75);white-space:nowrap;transition:.25s}.tab[aria-selected=true]{background:#fff;color:#2b1a6b;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.out{flex:1;min-height:200px;max-height:380px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;border-radius:14px;background:rgba(10,8,40,.38);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);line-height:1.8;font-size:13.5px;animation:fd .5s both;outline:0}
-@keyframes fd{from{opacity:0;transform:translateY(10px)}}
-.out.c::after{content:"";display:inline-block;width:2px;height:1.1em;margin-left:2px;vertical-align:text-bottom;background:#fff;animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
-.out::-webkit-scrollbar{width:6px}.out::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:9px}
-.empty{flex:1;display:grid;place-content:center;text-align:center;color:rgba(255,255,255,.8);padding:20px;border:1px dashed rgba(255,255,255,.3);border-radius:14px}.empty b{font-size:15px;color:#fff}.empty p{margin:4px 0 0;font-size:12.5px;max-width:260px}
-.steps{flex:1;display:grid;align-content:center;gap:10px}
-.st{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:rgba(10,8,40,.3);opacity:.55;transition:.4s}.st.run{opacity:1;background:rgba(255,255,255,.2)}.st.done{opacity:1}
-.st i{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.35);flex:none;display:grid;place-items:center;transition:.3s}.st.run i{border-top-color:#fff;animation:rot .8s linear infinite}.st.done i{background:var(--ok);border-color:var(--ok)}.st.done i::after{content:"";width:5px;height:9px;border:solid #06241a;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
-.st b{display:block;font-size:13.5px}.st span{font-size:12px;opacity:.8}
-.pbar{height:4px;border-radius:9px;background:rgba(255,255,255,.2);overflow:hidden}.pbar i{display:block;height:100%;width:0;background:#fff;transition:width .8s cubic-bezier(.16,1,.3,1)}
-.hf{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:12px}.hf span{padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.16)}
-.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.kpi{padding:16px 18px;border-radius:18px;background:var(--card);border:1px solid var(--ln);transition:.25s}.kpi:hover{transform:translateY(-3px);border-color:rgba(25,227,255,.4)}
-.kpi small{color:var(--mu);font-size:12px}.kpi b{display:block;font-size:26px;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums}.kpi:nth-child(1) b{color:var(--cy)}.kpi:nth-child(2) b{color:var(--pk)}.kpi:nth-child(3) b{color:var(--vi)}.kpi:nth-child(4) b{color:var(--ok)}
-.g2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px}
-.chart{width:100%;height:150px;display:block}.chart .ar{opacity:0;animation:fd .8s .5s forwards}.chart .ln{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.4s .1s ease forwards}@keyframes dr{to{stroke-dashoffset:0}}
-.donut{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.donut svg{width:130px;height:130px;flex:none;transform:rotate(-90deg)}.donut circle{fill:none;stroke-width:12;transition:stroke-dasharray .9s cubic-bezier(.16,1,.3,1),stroke-dashoffset .9s cubic-bezier(.16,1,.3,1)}
-.dc{position:relative;width:130px;height:130px;flex:none}.dc svg{position:absolute;inset:0}.dc div{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font-size:11px;color:var(--mu)}.dc b{font-size:22px;color:var(--tx)}
-.lg{display:grid;gap:8px;font-size:12.5px}.lg span{display:flex;align-items:center;gap:8px;color:var(--mu)}.lg i{width:10px;height:10px;border-radius:50%}
-table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;font-weight:500;color:var(--mu);font-size:12px;padding:0 10px 10px}td{padding:11px 10px;border-top:1px solid var(--ln)}
-tbody tr{cursor:pointer;transition:background .2s}tbody tr:hover{background:rgba(255,255,255,.05)}.pr{max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nm{font-variant-numeric:tabular-nums;color:var(--cy)}
-.tw{overflow-x:auto}.th{display:flex;justify-content:space-between;align-items:center}.clr{color:var(--mu);font-size:12px}.clr:hover{color:var(--er)}
-.toast{position:fixed;z-index:60;left:50%;bottom:26px;transform:translate(-50%,16px);opacity:0;pointer-events:none;padding:11px 18px;border-radius:12px;background:#fff;color:#0b121a;font-weight:500;font-size:13px;box-shadow:0 14px 40px rgba(0,0,0,.5);transition:.3s}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:980px){.app{grid-template-columns:1fr}.side{flex-direction:row;align-items:center;overflow-x:auto;padding:12px}.logo{padding:0 10px 0 4px}.sp,.me{display:none}.nav{white-space:nowrap}.g1,.g2{grid-template-columns:1fr}.glow{display:none}}
-@media(max-width:600px){body{padding:0}.app{border-radius:0;border:0}.kpis{grid-template-columns:repeat(2,1fr)}.main{padding:16px 14px 24px}.search{min-width:100%;order:3}.hm{display:none}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+:focus-visible{outline:3px dashed var(--sun);outline-offset:3px}[hidden]{display:none!important}
+/* sky + parallax layers */
+.sky{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,#1f1a5e 0%,#5b3cc4 30%,#ff5fa2 70%,#ffb86b 100%)}
+.rays{position:absolute;left:50%;top:34%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;background:repeating-conic-gradient(rgba(255,255,255,.08) 0 5deg,transparent 5deg 14deg);animation:spin 90s linear infinite}
+.layer{position:absolute;left:0;right:0;will-change:transform;transform:translate3d(0,calc(var(--sy,0)*var(--sp)*-1px),0)}
+.stars{top:-30%;bottom:20%;opacity:.9;background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(1.5px 1.5px at 95px 85px,#fff,transparent),radial-gradient(2.5px 2.5px at 150px 20px,#ffd23f,transparent);background-size:180px 120px}
+.clouds{bottom:-18%;height:48%;opacity:.92;background:radial-gradient(70px 46px at 12% 70%,#fff 97%,transparent) 0 0/360px 150px repeat-x,radial-gradient(90px 56px at 62% 80%,#ffe3f1 97%,transparent) 0 20px/430px 170px repeat-x}
+@supports(animation-timeline:scroll()){.layer{animation:par linear both;animation-timeline:scroll(root);transform:none}@keyframes par{to{transform:translate3d(0,calc(var(--sp)*-1500px),0)}}}
+html.noanim .layer,html.noanim .rays{animation:none;transform:none}
+.petals{position:absolute;inset:0;pointer-events:none}.petals i{position:absolute;top:-5vh;width:var(--w);height:var(--w);border-radius:150% 0 150% 0;background:#ffc2de;opacity:.85;animation:fall var(--d) linear infinite}
+@keyframes fall{from{transform:translate3d(0,-8vh,0) rotate(0)}to{transform:translate3d(var(--dx),112vh,0) rotate(560deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes pop{from{opacity:0;transform:translateY(34px) scale(.6) rotate(-7deg)}}@keyframes twink{50%{transform:scale(.4) rotate(45deg);opacity:.5}}
+/* header + nav */
+.site-head{position:sticky;top:0;z-index:30;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:10px clamp(12px,4vw,40px);background:rgba(255,249,240,.94);border-bottom:var(--b);backdrop-filter:blur(8px)}
+.logo{display:flex;align-items:center;gap:10px;margin-right:auto;font:400 20px var(--h);color:var(--ink);text-decoration:none}
+.logo img{width:38px;height:38px;border:var(--b);border-radius:12px;background:var(--sun);padding:3px;transform:rotate(-6deg);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}.logo:hover img{transform:rotate(10deg) scale(1.15)}
+nav ul{display:flex;gap:8px;list-style:none;margin:0;padding:0}
+nav a{display:block;padding:5px 16px;border:var(--b);border-radius:99px;font-weight:800;font-size:14px;color:var(--ink);text-decoration:none;background:#fff;box-shadow:3px 3px 0 var(--ink);transition:transform .15s,background .15s}
+nav a:hover{transform:translateY(-2px) rotate(-3deg);background:var(--sun)}nav a.on{background:var(--pk);color:#fff}
+.pill{display:flex;align-items:center;gap:8px;padding:5px 14px;border:var(--b);border-radius:99px;background:#fff;font-size:13px;font-weight:800}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--sun);border:2px solid var(--ink)}.dot.on{background:#3ee68b}.dot.off{background:#ff4d6d}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(12px,4vw,32px)}
+/* hero */
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:center;padding:clamp(28px,6vw,72px) 0 28px}
+h1{margin:0 0 16px;font:400 clamp(34px,7vw,74px)/1.06 var(--h);color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 6px 0 var(--ink)}
+h1 span{display:inline-block}html.js:not(.noanim) h1 span{animation:pop .7s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i)*.1s)}
+.lead{max-width:34em;margin:0 0 22px;padding:12px 16px;background:var(--pp);border:var(--b);border-radius:18px;box-shadow:var(--hs);font-weight:800}
+.art{position:relative;justify-self:center;width:min(78%,320px)}.art img{display:block;width:100%;height:auto;animation:float 4s ease-in-out infinite;filter:drop-shadow(6px 8px 0 rgba(27,19,64,.45))}
+.bub{position:absolute;top:-4%;left:-12%;padding:6px 14px;background:#fff;border:var(--b);border-radius:18px;font-weight:800;font-size:14px;box-shadow:3px 3px 0 var(--ink);transform:rotate(-6deg)}
+.bub::after{content:"";position:absolute;left:24px;bottom:-12px;border:8px solid transparent;border-top:12px solid var(--ink)}
+.sk{position:absolute;width:22px;height:22px;background:var(--sun);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:twink 2.2s ease-in-out infinite}.sk.a{right:-4%;top:10%}.sk.b{left:2%;bottom:6%;animation-delay:-1s;background:var(--mt)}
+/* buttons */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:10px 26px;border:var(--b);border-radius:14px;background:var(--pk);color:#fff;font:400 18px var(--h);box-shadow:var(--hs);text-decoration:none;transition:transform .15s,box-shadow .15s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.65) 50%,transparent 60%);transform:translateX(-130%)}
+.btn:hover:not(:disabled){transform:translate(-2px,-3px) skewX(-5deg);box-shadow:8px 9px 0 var(--ink)}.btn:hover:not(:disabled)::after{transform:translateX(130%);transition:transform .6s}
+.btn:active:not(:disabled){transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink)}.btn:disabled{opacity:.7;cursor:progress}
+.spin{width:18px;height:18px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}.go.l .spin{display:block}
+/* cards */
+.card{position:relative;background:var(--pp);border:var(--b);border-radius:24px;box-shadow:7px 7px 0 var(--ink);padding:20px;min-width:0}
+.rib{display:inline-block;padding:3px 16px;background:var(--sun);border:var(--b);border-radius:8px;font:400 17px var(--h);transform:rotate(-2deg);box-shadow:3px 3px 0 var(--ink)}
+.sub{margin:10px 0 14px;font-size:14px;opacity:.8}
+.panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:26px;padding:16px 0 28px}
+textarea{display:block;width:100%;min-height:210px;resize:vertical;padding:14px;border:var(--b);border-radius:16px;background:#fff;line-height:1.7;transition:box-shadow .2s,transform .2s}
+textarea:focus{outline:0;box-shadow:5px 5px 0 var(--sk);transform:translate(-2px,-2px)}textarea::placeholder{color:#7b72a8}
+.meta{display:flex;justify-content:space-between;margin:8px 2px 0;font-size:13px;font-weight:800}.meta .w{color:#c27b00}.meta .b{color:#d1243d}
+.lk{font-weight:800;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chip{padding:5px 14px;border:var(--b);border-radius:99px;background:#fff;font-weight:800;font-size:13px;box-shadow:3px 3px 0 var(--ink);transition:transform .15s,background .15s}.chip:hover:not(:disabled){background:var(--mt);transform:translateY(-3px) rotate(-3deg)}
+.go{width:100%}.err{margin-top:14px;padding:10px 14px;border:var(--b);border-radius:14px;background:#ffd6de;font-weight:800;font-size:14px}
+.res{color:#fff;background:linear-gradient(135deg,var(--vi),#c04fd8 60%,var(--pk));display:flex;flex-direction:column;min-height:440px;overflow:hidden}
+.res::before{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 85% 15%,rgba(255,255,255,.12) 0 3deg,transparent 3deg 12deg);pointer-events:none}
+.res>*{position:relative}.res .sub{color:#fff}
+.mark{position:absolute!important;right:10px;top:24px;font:400 clamp(90px,15vw,170px)/1 var(--h);color:transparent;-webkit-text-stroke:3px rgba(255,255,255,.35);pointer-events:none;user-select:none}
+.hh{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}.tools{display:flex;gap:8px;flex-wrap:wrap}
+.tb{padding:4px 14px;border:var(--b);border-radius:10px;background:#fff;color:var(--ink);font-weight:800;font-size:13px;box-shadow:3px 3px 0 var(--ink);transition:transform .15s}.tb:hover:not(:disabled){transform:translateY(-2px) rotate(-2deg);background:var(--sun)}.tb:disabled{opacity:.5;cursor:default}
+.tabs{display:flex;gap:6px;margin:14px 0;overflow-x:auto;padding:2px 2px 6px}.tab{flex:none;padding:5px 16px;border:var(--b);border-radius:99px;background:rgba(255,255,255,.25);color:#fff;font-weight:800;font-size:13px;transition:transform .15s}.tab:hover{transform:translateY(-2px)}.tab[aria-selected=true]{background:var(--sun);color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.out{flex:1;min-height:200px;max-height:400px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;border:var(--b);border-radius:16px;background:rgba(27,19,64,.72);line-height:1.8;font-size:15px;outline:0;animation:pop .5s both}
+.out.c::after{content:"";display:inline-block;width:3px;height:1.1em;margin-left:2px;vertical-align:text-bottom;background:var(--sun);animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
+.empty{flex:1;display:grid;place-content:center;text-align:center;padding:20px;border:3px dashed rgba(255,255,255,.6);border-radius:16px}.empty b{font:400 20px var(--h)}.empty p{margin:6px 0 0;font-size:14px}
+.steps{flex:1;display:grid;align-content:center;gap:10px}.st{display:flex;align-items:center;gap:12px;padding:10px 14px;border:var(--b);border-radius:14px;background:rgba(27,19,64,.55);opacity:.6;transition:.4s}.st.run{opacity:1;background:var(--sk);color:var(--ink);transform:translateX(8px)}.st.done{opacity:1}
+.st i{width:26px;height:26px;border:3px solid currentColor;border-radius:50%;flex:none;display:grid;place-items:center}.st.run i{border-color:rgba(27,19,64,.3);border-top-color:var(--ink);animation:spin .8s linear infinite}.st.done i{background:#3ee68b;border-color:var(--ink)}.st.done i::after{content:"";width:6px;height:11px;border:solid var(--ink);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.st b{display:block;line-height:1.2}.st span{font-size:13px;opacity:.85}.pbar{height:10px;border:var(--b);border-radius:9px;background:#fff;overflow:hidden}.pbar i{display:block;height:100%;width:0;background:var(--pk);transition:width .8s cubic-bezier(.16,1,.3,1)}
+.hf{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:13px;font-weight:800}.hf span{padding:3px 12px;border:var(--b);border-radius:99px;background:rgba(27,19,64,.55)}
+/* stats + history */
+.sec{margin:8px 0 14px}.sec h2{display:inline-block;margin:0;padding:2px 18px;background:var(--pk);color:#fff;border:var(--b);border-radius:10px;font:400 clamp(20px,4vw,28px) var(--h);box-shadow:4px 4px 0 var(--ink);transform:rotate(-1.5deg)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:18px;padding:12px 0 30px}
+.kpi{padding:14px 16px;border:var(--b);border-radius:20px;box-shadow:6px 6px 0 var(--ink)}.kpi small{font-weight:800}.kpi b{display:block;font:400 clamp(28px,5vw,40px)/1.1 var(--h);font-variant-numeric:tabular-nums}
+.kpi:nth-child(1){background:var(--sk)}.kpi:nth-child(2){background:var(--pk);color:#fff}.kpi:nth-child(3){background:var(--sun)}.kpi:nth-child(4){background:var(--mt)}
+.hl-card{margin-bottom:34px}.search{display:flex;align-items:center;gap:8px;margin:12px 0;padding:0 14px;height:44px;border:var(--b);border-radius:14px;background:#fff}.search input{flex:1;min-width:0;border:0;background:none;outline:0}.search:focus-within{box-shadow:4px 4px 0 var(--sk)}
+.hlist{display:grid;gap:8px;max-height:360px;overflow:auto;padding:2px 6px 6px 2px}.hrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;text-align:left;padding:10px 14px;border:var(--b);border-radius:14px;background:#fff;transition:transform .15s,background .15s}.hrow:hover{background:var(--sun);transform:translateX(6px) rotate(-.5deg)}
+.hrow .pr{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hrow .nm{font:400 15px var(--h);color:var(--vi)}.hrow small{font-weight:800}.none{padding:8px 4px;font-weight:800}
+footer{padding:22px 16px 34px;text-align:center;background:var(--pp);border-top:var(--b);font-weight:800;font-size:14px}
+.toast{position:fixed;z-index:60;left:50%;bottom:24px;max-width:calc(100% - 24px);transform:translate(-50%,20px) scale(.9);opacity:0;pointer-events:none;padding:10px 20px;border:var(--b);border-radius:14px;background:var(--sun);font-weight:800;box-shadow:var(--hs);transition:.3s cubic-bezier(.3,1.6,.5,1)}.toast.show{opacity:1;transform:translate(-50%,0)}
+.spk{position:fixed;z-index:70;width:14px;height:14px;background:var(--sun);pointer-events:none;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+/* scroll entrance */
+.rv{transition:opacity .7s,transform .7s cubic-bezier(.2,1.3,.3,1)}.rv.in.tilt{transition:transform .2s ease-out}
+html.js:not(.noanim) .rv:not(.in){opacity:0;transform:translateY(46px) skewY(3deg)}
+@media(max-width:820px){.hero{grid-template-columns:1fr;text-align:center}.lead{margin-inline:auto}.art{order:-1;width:min(60%,240px)}}
+@media(max-width:640px){nav{order:3;width:100%}nav ul{overflow-x:auto;padding-bottom:6px}h1{-webkit-text-stroke:2px var(--ink);text-shadow:3px 4px 0 var(--ink)}.card{padding:16px;box-shadow:5px 5px 0 var(--ink)}.hrow{grid-template-columns:minmax(0,1fr) auto}.hrow small{display:none}}
+@media(max-width:360px){.logo{font-size:17px}.btn{padding-inline:16px;font-size:16px}.pill span{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<div class="glow l" aria-hidden="true"></div><div class="glow r" aria-hidden="true"></div>
-<div class="app">
-<aside class="side">
-  <div class="logo"><i>✳</i>PromptForge</div>
-  <a class="nav on" href="#studio">Studio</a><a class="nav" href="#insights">Insights</a><a class="nav" href="#history">History</a><a class="nav" href="http://127.0.0.1:8000/docs" target="_blank" rel="noopener">API docs</a>
-  <div class="sp"></div>
-  <div class="me" aria-live="polite"><span class="dot" id="hd"></span><div><b id="hl">Connecting</b><span id="hm">Backend</span></div></div>
-</aside>
-<div class="main">
-  <header class="top"><h1>Prompt Studio</h1><label class="search"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="Search your history" aria-label="Search history"></label></header>
+<div class="sky" aria-hidden="true"><div class="rays"></div><div class="layer stars" style="--sp:.05"></div><div class="layer clouds" style="--sp:.14"></div><div class="petals" id="petals"></div></div>
 
-  <section class="g1" id="studio">
-    <form class="card white" id="form" novalidate>
-      <h2>Your idea</h2><p class="sub">Write it roughly. We'll do the rest.</p>
+<header class="site-head">
+  <a class="logo" href="#top"><img alt="" width="38" height="38" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3l5 12 13 1-10 8 3 13-11-7-11 7 3-13L2 16l13-1z' fill='%23ff5fa2' stroke='%231b1340' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" data-src="assets/placeholder-icon-1.svg">PromptForge</a>
+  <nav aria-label="Primary"><ul><li><a class="on" href="#studio">Studio</a></li><li><a href="#stats">Stats</a></li><li><a href="#history">History</a></li></ul></nav>
+  <div class="pill" aria-live="polite"><i class="dot" id="hd"></i><span id="hl">Connecting</span></div>
+</header>
+
+<main class="wrap" id="top">
+  <noscript><p class="card">PromptForge needs JavaScript to talk to the backend. The page layout is shown below, but Enhance will not work until it is enabled.</p></noscript>
+  <section class="hero" aria-labelledby="t">
+    <div>
+      <h1 id="t"><span style="--i:0">Rough</span> <span style="--i:1">ideas,</span> <span style="--i:2">legendary</span> <span style="--i:3">prompts!</span></h1>
+      <p class="lead">Describe what you want in your own words. Three agents shape it, test it and polish it into one clean prompt.</p>
+      <a class="btn" href="#studio">Start the ritual</a>
+    </div>
+    <div class="art"><span class="bub">Let's polish it!</span><span class="sk a"></span><span class="sk b"></span>
+      <img alt="Forge-chan, the PromptForge mascot" width="320" height="320" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M40 70L60 20 85 60 100 10 115 60 140 20 160 70Z' fill='%23ffd23f' stroke='%231b1340' stroke-width='6' stroke-linejoin='round'/%3E%3Ccircle cx='100' cy='120' r='70' fill='%23ffc2de' stroke='%231b1340' stroke-width='6'/%3E%3Cellipse cx='72' cy='115' rx='14' ry='20' fill='%23fff' stroke='%231b1340' stroke-width='5'/%3E%3Cellipse cx='128' cy='115' rx='14' ry='20' fill='%23fff' stroke='%231b1340' stroke-width='5'/%3E%3Ccircle cx='74' cy='120' r='9' fill='%231b1340'/%3E%3Ccircle cx='130' cy='120' r='9' fill='%231b1340'/%3E%3Ccircle cx='70' cy='112' r='4' fill='%23fff'/%3E%3Ccircle cx='126' cy='112' r='4' fill='%23fff'/%3E%3Cellipse cx='52' cy='145' rx='11' ry='6' fill='%23ff5fa2' opacity='.6'/%3E%3Cellipse cx='148' cy='145' rx='11' ry='6' fill='%23ff5fa2' opacity='.6'/%3E%3Cpath d='M88 148Q100 160 112 148' fill='none' stroke='%231b1340' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" data-src="assets/placeholder-image-1.png"></div>
+  </section>
+
+  <section class="panels" id="studio" aria-label="Prompt studio">
+    <form class="card rv" id="form" novalidate>
+      <span class="rib">Your idea</span><p class="sub">Write it roughly. Keep your core intent.</p>
       <textarea id="inp" maxlength="8000" aria-label="Your prompt" placeholder="Write a cold email to a founder offering to redesign their onboarding. Friendly, short, one clear ask." required></textarea>
-      <div class="meta"><span id="cn">0 / 8,000</span><button class="lnk" id="clr" type="button">Clear</button></div>
+      <div class="meta"><span id="cn">0 / 8,000</span><button class="lk" id="clr" type="button">Clear</button></div>
       <div class="chips" role="group" aria-label="Examples">
         <button class="chip" type="button" data-s="Create a responsive portfolio website for a computer science student. Use a modern dark theme, accessible components, and clear project cards.">Website</button>
         <button class="chip" type="button" data-s="Explain the Python IndexError: index 0 is out of bounds for axis 0 with size 0. Identify the likely cause, provide the minimal safe fix, and show a test case.">Debug code</button>
         <button class="chip" type="button" data-s="Teach me recursion in Python in simple language. Use one analogy, one small code example, and a short practice question with its answer.">Learn</button>
         <button class="chip" type="button" data-s="Create a practical launch plan for a small AI productivity tool. Cover target users, core features, validation, risks, and measurable first steps.">Plan</button>
       </div>
-      <button class="go" id="go" type="submit"><span class="spin"></span><span id="gl">Enhance prompt</span></button>
+      <button class="btn go" id="go" type="submit"><span class="spin"></span><span id="gl">Enhance!</span></button>
       <div class="err" id="err" role="alert" hidden></div>
     </form>
-
-    <article class="card hero">
+    <article class="card res rv tilt" style="transition-delay:.1s">
       <div class="mark" id="mark" aria-hidden="true">00</div>
-      <div class="hh"><div><h2>Enhanced prompt</h2><p class="sub" style="color:rgba(255,255,255,.75)">Three agents, one clean result.</p></div>
-        <div class="tools"><button class="tb" id="cp" type="button" disabled>Copy</button><button class="tb hm" id="dl" type="button" disabled>Save</button><button class="tb hm" id="ru" type="button" disabled>Edit</button></div></div>
-      <div class="empty" id="empty"><div><b>Nothing enhanced yet</b><p>Write an idea on the left, then press Enhance prompt.</p></div></div>
+      <div class="hh"><div><span class="rib" style="background:var(--mt)">Enhanced prompt</span><p class="sub">Three agents, one clean result.</p></div>
+        <div class="tools"><button class="tb" id="cp" type="button" disabled>Copy</button><button class="tb" id="dl" type="button" disabled>Save</button><button class="tb" id="ru" type="button" disabled>Edit</button></div></div>
+      <div class="empty" id="empty"><div><b>Nothing here yet</b><p>Write an idea, then press Enhance!</p></div></div>
       <div class="steps" id="steps" hidden>
-        <div class="st"><i></i><div><b>Structure</b><span>Goal, context, deliverable</span></div></div>
-        <div class="st"><i></i><div><b>Strengthen</b><span>Edge cases and checks</span></div></div>
-        <div class="st"><i></i><div><b>Polish</b><span>Tighten the wording</span></div></div>
+        <div class="st"><i></i><div><b>Agent 1: Structure</b><span>Goal, context, deliverable</span></div></div>
+        <div class="st"><i></i><div><b>Agent 2: Strengthen</b><span>Edge cases and checks</span></div></div>
+        <div class="st"><i></i><div><b>Agent 3: Polish</b><span>Tighten the wording</span></div></div>
         <div class="pbar"><i id="pb"></i></div>
       </div>
-      <div id="done" hidden style="display:none;flex-direction:column;flex:1">
-        <div class="tabs" id="tabs" role="tablist">
-          <button class="tab" role="tab" aria-selected="true" data-k="final">Final</button><button class="tab" role="tab" aria-selected="false" data-k="structural">Structure</button><button class="tab" role="tab" aria-selected="false" data-k="depth_and_edge_cases">Strengthen</button><button class="tab" role="tab" aria-selected="false" data-k="formatting_and_precision">Polish</button>
-        </div>
+      <div id="done" hidden style="flex-direction:column;flex:1">
+        <div class="tabs" id="tabs" role="tablist"><button class="tab" role="tab" aria-selected="true" data-k="final">Final</button><button class="tab" role="tab" aria-selected="false" data-k="structural">Structure</button><button class="tab" role="tab" aria-selected="false" data-k="depth_and_edge_cases">Strengthen</button><button class="tab" role="tab" aria-selected="false" data-k="formatting_and_precision">Polish</button></div>
         <div class="out" id="out" tabindex="0" aria-live="polite"></div>
         <div class="hf"><span id="wc"></span><span id="lt"></span></div>
       </div>
     </article>
   </section>
 
-  <section id="insights" style="display:grid;gap:18px">
+  <section id="stats" aria-label="Stats"><div class="sec rv"><h2>Power levels</h2></div>
     <div class="kpis">
-      <div class="kpi"><small>Words in last prompt</small><b id="k1">0</b></div>
-      <div class="kpi"><small>Last run time (s)</small><b id="k2">0</b></div>
-      <div class="kpi"><small>Prompts enhanced</small><b id="k3">0</b></div>
-      <div class="kpi"><small>Average words</small><b id="k4">0</b></div>
-    </div>
-    <div class="g2">
-      <div class="card"><h2>Prompt length over time</h2><p class="sub">Words in each saved result, oldest to newest.</p><div id="area"></div></div>
-      <div class="card"><h2>Where the words come from</h2><p class="sub">Share of text produced by each stage.</p>
-        <div class="donut"><div class="dc"><svg viewBox="0 0 130 130" id="dn"></svg><div><b id="dt">0</b>words</div></div>
-        <div class="lg"><span><i style="background:var(--cy)"></i>Structure <b id="l1" style="color:var(--tx)"></b></span><span><i style="background:var(--pk)"></i>Strengthen <b id="l2" style="color:var(--tx)"></b></span><span><i style="background:var(--vi)"></i>Polish <b id="l3" style="color:var(--tx)"></b></span></div></div></div>
+      <div class="kpi rv tilt"><small>Words in last prompt</small><b id="k1">0</b></div>
+      <div class="kpi rv tilt" style="transition-delay:.06s"><small>Last run (seconds)</small><b id="k2">0</b></div>
+      <div class="kpi rv tilt" style="transition-delay:.12s"><small>Prompts enhanced</small><b id="k3">0</b></div>
+      <div class="kpi rv tilt" style="transition-delay:.18s"><small>Average words</small><b id="k4">0</b></div>
     </div>
   </section>
 
-  <section class="card" id="history"><div class="th"><div><h2>History</h2><p class="sub">Saved in this browser only. Select a row to reopen it.</p></div><button class="clr" id="hc" type="button">Clear all</button></div>
-    <div class="tw"><table><thead><tr><th>Date</th><th>Prompt</th><th>Words</th><th>Time</th></tr></thead><tbody id="tb"></tbody></table></div></section>
-</div>
-</div>
+  <section id="history" aria-label="History"><div class="sec rv"><h2>History</h2></div>
+    <div class="card hl-card rv"><p class="sub" style="margin-top:0">Saved in this browser only. Select one to reopen it.</p>
+      <label class="search"><span aria-hidden="true">&#9906;</span><input id="q" type="search" placeholder="Search your history" aria-label="Search history"></label>
+      <div class="hlist" id="hlist"></div><p style="margin:12px 0 0;text-align:right"><button class="lk" id="hc" type="button">Clear all</button></p></div>
+  </section>
+</main>
+<footer>PromptForge. Your prompts go only to the backend you run.</footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (()=>{"use strict";
-// Change this when you deploy the backend.
-const API="https://promptforge-ai-agent.onrender.com",MAX=8000,HK="promptforge.history.v1",MH=20,TMO=120000;
-const $=id=>document.getElementById(id),RM=matchMedia("(prefers-reduced-motion:reduce)").matches;
+// Change this when you deploy the backend. Set USE_ASSETS to true once the files in assets/ exist.
+const API="https://promptforge-ai-agent.onrender.com",MAX=8000,HK="promptforge.history.v1",MH=20,TMO=120000,USE_ASSETS=false;
+const $=id=>document.getElementById(id),root=document.documentElement;
+const RM=matchMedia("(prefers-reduced-motion:reduce)").matches,CAN_ANIM=typeof Element.prototype.animate==="function",CAN_IO="IntersectionObserver"in window,CAN_ST=!!(window.CSS&&CSS.supports&&CSS.supports("animation-timeline","scroll()")),FINE=matchMedia("(hover:hover) and (pointer:fine)").matches;
+// Simple console-error check: add ?debug to the URL to log a summary after load.
+const errs=[];addEventListener("error",e=>errs.push(e.message));
+if(/[?&]debug/.test(location.search))addEventListener("load",()=>setTimeout(()=>console.info("PromptForge debug: "+errs.length+" runtime error(s) captured"),2500));
+if(RM)root.classList.add("noanim");
+
+// optional real artwork (placeholders live in assets/); falls back to the built-in art on error
+if(USE_ASSETS)document.querySelectorAll("img[data-src]").forEach(i=>{const f=i.src;i.onerror=()=>{i.onerror=null;i.src=f};i.src=i.dataset.src});
+
+/* ---------- animation layer (each effect degrades on its own) ---------- */
+const rv=[...document.querySelectorAll(".rv")];
+if(CAN_IO&&!RM){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1});rv.forEach(el=>io.observe(el))}else rv.forEach(el=>el.classList.add("in"));
+if(!CAN_ST&&!RM){let t=false;addEventListener("scroll",()=>{if(!t){t=true;requestAnimationFrame(()=>{root.style.setProperty("--sy",scrollY|0);t=false})}},{passive:true})}
+if(!RM){const p=$("petals");for(let i=0;i<14;i++){const s=document.createElement("i");s.style.cssText=`left:${Math.random()*100}%;--dx:${Math.random()*30-15}vw;--d:${10+Math.random()*9}s;--w:${10+Math.random()*10}px;animation-delay:${-Math.random()*16}s`;p.appendChild(s)}}
+function burst(x,y){if(!CAN_ANIM||RM)return;for(let i=0;i<9;i++){const s=document.createElement("i");s.className="spk";s.style.left=x+"px";s.style.top=y+"px";document.body.appendChild(s);const a=i/9*6.283,r=36+Math.random()*44;s.animate([{transform:"translate(-50%,-50%) scale(1) rotate(0)",opacity:1},{transform:`translate(calc(-50% + ${Math.cos(a)*r}px),calc(-50% + ${Math.sin(a)*r}px)) scale(.2) rotate(200deg)`,opacity:0}],{duration:650,easing:"cubic-bezier(.2,.8,.3,1)"}).onfinish=()=>s.remove()}}
+document.addEventListener("click",e=>{const b=e.target.closest(".btn,.chip,.tb");if(!b)return;let x=e.clientX,y=e.clientY;if(!x&&!y){const r=b.getBoundingClientRect();x=r.left+r.width/2;y=r.top+r.height/2}burst(x,y)});
+if(FINE&&!RM)document.querySelectorAll(".tilt").forEach(c=>{c.addEventListener("pointermove",e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(900px) rotateY(${x*6}deg) rotateX(${-y*6}deg)`});c.addEventListener("pointerleave",()=>{c.style.transform=""})});
+const navs=[...document.querySelectorAll("nav a")];
+if(CAN_IO){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navs.forEach(n=>n.classList.toggle("on",n.getAttribute("href")==="#"+e.target.id))}),{rootMargin:"-40% 0px -50% 0px"});["studio","stats","history"].forEach(i=>o.observe($(i)))}
+
+/* ---------- app ---------- */
 const inp=$("inp"),go=$("go"),out=$("out"),KEYS=["final","structural","depth_and_edge_cases","formatting_and_precision"];
 let last=null,tab="final",tt,pt,ty,q="";
 const wc=s=>(s||"").trim().split(/\s+/).filter(Boolean).length;
-const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2200)};
+const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2400)};
 function cu(el,to,dec=0){const from=parseFloat(el.dataset.v||0);el.dataset.v=to;if(RM){el.textContent=to.toFixed(dec);return}const t0=performance.now(),f=n=>{const p=Math.min(1,(n-t0)/700),e=1-Math.pow(1-p,3);el.textContent=(from+(to-from)*e).toFixed(dec);if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
 function fit(){inp.style.height="auto";inp.style.height=Math.max(210,Math.min(inp.scrollHeight,innerHeight*.5))+"px"}
 function count(){const n=inp.value.length,c=$("cn");c.textContent=n.toLocaleString()+" / "+MAX.toLocaleString();c.className=n>=MAX?"b":n>MAX*.9?"w":"";fit()}
 inp.addEventListener("input",count);
-const showErr=m=>{const e=$("err");e.hidden=false;e.textContent=m;e.style.animation="none";e.offsetWidth;e.style.animation=""},clrErr=()=>{$("err").hidden=true};
+const showErr=m=>{const e=$("err");e.hidden=false;e.textContent=m},clrErr=()=>{$("err").hidden=true};
 
-// pipeline
 function pipe(on){const s=[...document.querySelectorAll(".st")];clearInterval(pt);$("steps").hidden=!on;if(!on)return;let i=0;
  const p=()=>{s.forEach((x,k)=>x.className="st"+(k<i?" done":k===i?" run":""));$("pb").style.width=Math.min(92,(i+.6)/3*100)+"%"};p();pt=setInterval(()=>{if(i<2){i++;p()}},4500)}
-function busy(b){go.disabled=b;go.classList.toggle("l",b);$("gl").textContent=b?"Running three agents":"Enhance prompt";inp.readOnly=b;document.querySelectorAll("[data-s]").forEach(x=>x.disabled=b);
- if(b){clrErr();$("empty").hidden=true;$("done").style.display="none";if(window.matchMedia("(max-width:980px)").matches)$("steps").scrollIntoView({behavior:"smooth",block:"center"})}pipe(b)}
+function busy(b){go.disabled=b;go.classList.toggle("l",b);$("gl").textContent=b?"Casting...":"Enhance!";inp.readOnly=b;document.querySelectorAll("[data-s]").forEach(x=>x.disabled=b);
+ if(b){clrErr();$("empty").hidden=true;$("done").hidden=true;if(matchMedia("(max-width:820px)").matches)$("steps").scrollIntoView({behavior:RM?"auto":"smooth",block:"center"})}pipe(b)}
 
-// result
 const text=k=>!last?"":k==="final"?last.enhanced_prompt:(last.stages?.[k]||"No text returned for this stage.");
 function render(anim){cancelAnimationFrame(ty);const t=text(tab);out.className="out";if(!anim||RM||t.length>5000){out.textContent=t;return}
  out.classList.add("c");let i=0;const n=Math.max(4,Math.ceil(t.length/120)),f=()=>{i=Math.min(t.length,i+n);out.textContent=t.slice(0,i);if(i<t.length)ty=requestAnimationFrame(f);else out.classList.remove("c")};f()}
@@ -183,21 +219,10 @@ $("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(b)set
 out.addEventListener("click",()=>{cancelAnimationFrame(ty);out.classList.remove("c");out.textContent=text(tab)});
 function show(d,el){last=d;clrErr();$("empty").hidden=true;$("steps").hidden=true;const dn=$("done");dn.hidden=false;dn.style.display="flex";
  ["cp","dl","ru"].forEach(i=>$(i).disabled=false);setTab("final");const w=Number.isFinite(d.word_count)?d.word_count:wc(d.enhanced_prompt);
- $("wc").textContent=w+" words";$("lt").textContent=el>0?el.toFixed(1)+" seconds":"From history";cu($("mark"),w);render(el>0);insights(el)}
+ $("wc").textContent=w+" words";$("lt").textContent=el>0?el.toFixed(1)+" seconds":"From history";cu($("mark"),w);render(el>0);stats(el)}
 $("mark").dataset.v=0;
+function stats(el){const h=rh(),n=h.length,avg=n?h.reduce((a,b)=>a+b.words,0)/n:0;cu($("k1"),last?(Number.isFinite(last.word_count)?last.word_count:wc(last.enhanced_prompt)):0);cu($("k2"),el>0?el:(h[0]?.elapsed||0),1);cu($("k3"),n);cu($("k4"),Math.round(avg))}
 
-// charts
-function area(h){const el=$("area"),p=h.slice().reverse().map(i=>i.words);if(p.length<2){el.innerHTML='<p style="color:var(--mu);margin:30px 0">Enhance a couple of prompts to see your trend.</p>';return}
- const W=300,H=130,mx=Math.max(...p,1)*1.15,pt=p.map((v,i)=>[i/(p.length-1)*W,H-8-v/mx*(H-24)]);let d="M"+pt[0].join(",");
- for(let i=1;i<pt.length;i++){const m=(pt[i-1][0]+pt[i][0])/2;d+=`C${m},${pt[i-1][1]} ${m},${pt[i][1]} ${pt[i][0]},${pt[i][1]}`}
- el.innerHTML=`<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Words per prompt over time"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#19e3ff" stop-opacity=".45"/><stop offset="1" stop-color="#19e3ff" stop-opacity="0"/></linearGradient><linearGradient id="s" x1="0" x2="1"><stop offset="0" stop-color="#19e3ff"/><stop offset="1" stop-color="#ff3ea5"/></linearGradient></defs><path class="ar" d="${d}L${W},${H}L0,${H}Z" fill="url(#g)"/><path class="ln" pathLength="1" d="${d}" fill="none" stroke="url(#s)" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>`}
-function donut(){const s=last?.stages||{},v=["structural","depth_and_edge_cases","formatting_and_precision"].map(k=>wc(s[k])),t=v.reduce((a,b)=>a+b,0),C=2*Math.PI*50,col=["#19e3ff","#ff3ea5","#8b5cff"];let off=0,h='<circle cx="65" cy="65" r="50" stroke="rgba(255,255,255,.07)"/>';
- v.forEach((n,i)=>{const l=t?n/t*C:0;h+=`<circle cx="65" cy="65" r="50" stroke="${col[i]}" stroke-dasharray="${Math.max(0,l-2)} ${C}" stroke-dashoffset="${-off}" stroke-linecap="round"/>`;off+=l;$("l"+(i+1)).textContent=t?Math.round(n/t*100)+"%":""});
- $("dn").innerHTML=h;cu($("dt"),t)}
-function insights(el){const h=rh(),n=h.length,avg=n?h.reduce((a,b)=>a+b.words,0)/n:0;
- cu($("k1"),last?(Number.isFinite(last.word_count)?last.word_count:wc(last.enhanced_prompt)):0);cu($("k2"),el>0?el:(h[0]?.elapsed||0),1);cu($("k3"),n);cu($("k4"),Math.round(avg));area(h);donut()}
-
-// api
 function nerr(d,s){if(s===400||s===422)return typeof d==="string"?d:"Check your prompt and try again.";if(s===503)return"The backend isn't set up yet. Add GROQ_API_KEY to the server's .env file and restart it.";if(s===502)return"The AI provider didn't finish the request. Check the backend terminal, then try again.";if(s>=500)return"The backend ran into an error. Check the server terminal and try again.";return typeof d==="string"?d:`Request failed (HTTP ${s}). Try again.`}
 async function enhance(prompt){const c=new AbortController(),to=setTimeout(()=>c.abort(),TMO),t0=performance.now();
  try{const r=await fetch(API+"/enhance",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({prompt}),signal:c.signal});let d;try{d=await r.json()}catch(_){throw new Error("The server sent a response that couldn't be read. Check the backend URL and logs.")}
@@ -205,39 +230,32 @@ async function enhance(prompt){const c=new AbortController(),to=setTimeout(()=>c
  catch(e){if(e.name==="AbortError")throw new Error("The request took longer than two minutes. Check the backend and model provider, then try again.");if(e instanceof TypeError)throw new Error(`Can't reach ${API}. Start the Python server and check CORS. Open this page with Live Server on port 5500 rather than as a file.`);throw e}
  finally{clearTimeout(to)}}
 $("form").addEventListener("submit",async e=>{e.preventDefault();const p=inp.value.trim();
- if(!p){showErr("Write your idea first, then press Enhance prompt.");inp.focus();return}if(p.length>MAX){showErr(`That's over the ${MAX.toLocaleString()} character limit.`);return}
+ if(!p){showErr("Write your idea first, then press Enhance!");inp.focus();return}if(p.length>MAX){showErr(`That's over the ${MAX.toLocaleString()} character limit.`);return}
  busy(true);try{const{d,el}=await enhance(p);$("pb").style.width="100%";document.querySelectorAll(".st").forEach(s=>s.className="st done");await new Promise(r=>setTimeout(r,RM?0:450));busy(false);
-  hist({id:Date.now()+"-"+Math.random().toString(36).slice(2,7),original:p,result:d,createdAt:new Date().toISOString(),words:Number.isFinite(d.word_count)?d.word_count:wc(d.enhanced_prompt),elapsed:el});show(d,el);toast("Prompt enhanced")}
- catch(er){busy(false);if(last){$("done").style.display="flex"}else $("empty").hidden=false;showErr(er.message||"Something went wrong. Try again.")}});
+  hist({id:Date.now()+"-"+Math.random().toString(36).slice(2,7),original:p,result:d,createdAt:new Date().toISOString(),words:Number.isFinite(d.word_count)?d.word_count:wc(d.enhanced_prompt),elapsed:el});show(d,el);toast("Prompt enhanced!")}
+ catch(er){busy(false);if(last){$("done").hidden=false}else $("empty").hidden=false;showErr(er.message||"Something went wrong. Try again.")}});
 
-// actions
 async function copy(t,m){try{if(navigator.clipboard&&isSecureContext)await navigator.clipboard.writeText(t);else{const h=document.createElement("textarea");h.value=t;h.style.cssText="position:fixed;opacity:0";document.body.appendChild(h);h.select();const ok=document.execCommand("copy");h.remove();if(!ok)throw 0}toast(m)}catch(_){toast("Couldn't copy. Select the text and copy it manually.")}}
-$("cp").onclick=()=>last&&copy(text(tab),"Copied");
-$("dl").onclick=()=>{if(!last)return;const u=URL.createObjectURL(new Blob([text(tab)],{type:"text/plain;charset=utf-8"})),a=document.createElement("a");a.href=u;a.download="promptforge-"+tab+".txt";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);toast("Saved")};
-$("ru").onclick=()=>{if(!last)return;inp.value=last.enhanced_prompt;count();inp.focus();inp.scrollIntoView({behavior:"smooth",block:"center"});toast("Moved to the editor")};
+$("cp").onclick=()=>last&&copy(text(tab),"Copied!");
+$("dl").onclick=()=>{if(!last)return;const u=URL.createObjectURL(new Blob([text(tab)],{type:"text/plain;charset=utf-8"})),a=document.createElement("a");a.href=u;a.download="promptforge-"+tab+".txt";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);toast("Saved!")};
+$("ru").onclick=()=>{if(!last)return;inp.value=last.enhanced_prompt;count();inp.focus();inp.scrollIntoView({behavior:RM?"auto":"smooth",block:"center"});toast("Moved to the editor")};
 $("clr").onclick=()=>{inp.value="";count();clrErr();inp.focus()};
 document.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{inp.value=b.dataset.s;count();clrErr();inp.focus()});
 addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="Enter"&&!go.disabled){e.preventDefault();$("form").requestSubmit()}});
 
-// history
 const rh=()=>{try{const p=JSON.parse(localStorage.getItem(HK)||"[]");return Array.isArray(p)?p.filter(i=>i&&typeof i.original==="string"&&i.result&&typeof i.result.enhanced_prompt==="string").slice(0,MH).map(i=>({...i,words:Number.isFinite(i.words)?i.words:(Number.isFinite(i.result.word_count)?i.result.word_count:wc(i.result.enhanced_prompt))})):[]}catch(_){return[]}};
 function hist(en){try{localStorage.setItem(HK,JSON.stringify([en,...rh().filter(i=>i.id!==en.id)].slice(0,MH)))}catch(_){toast("Couldn't save to history.")}paintH()}
-function paintH(){const b=$("tb"),h=rh().filter(i=>!q||i.original.toLowerCase().includes(q));b.replaceChildren();
- if(!h.length){const r=b.insertRow(),c=r.insertCell();c.colSpan=4;c.style.color="var(--mu)";c.textContent=q?"No saved prompts match your search.":"Prompts you enhance appear here.";return}
- h.forEach(it=>{const r=b.insertRow();r.tabIndex=0;const d=r.insertCell(),p=r.insertCell(),w=r.insertCell(),t=r.insertCell();d.textContent=new Date(it.createdAt).toLocaleDateString(undefined,{month:"short",day:"numeric"});d.style.whiteSpace="nowrap";p.className="pr";p.textContent=it.original.replace(/\s+/g," ").trim();w.className="nm";w.textContent=it.words;t.textContent=Number.isFinite(it.elapsed)?it.elapsed.toFixed(1)+"s":"-";
-  const open=()=>{inp.value=it.original;count();show(it.result,0);$("studio").scrollIntoView({behavior:"smooth"})};r.onclick=open;r.onkeydown=e=>{if(e.key==="Enter")open()}})}
+function paintH(){const l=$("hlist"),h=rh().filter(i=>!q||i.original.toLowerCase().includes(q));l.replaceChildren();
+ if(!h.length){const p=document.createElement("p");p.className="none";p.textContent=q?"No saved prompts match your search.":"Prompts you enhance appear here.";l.appendChild(p);return}
+ h.forEach(it=>{const b=document.createElement("button");b.type="button";b.className="hrow";const d=document.createElement("small"),p=document.createElement("span"),w=document.createElement("span");d.textContent=new Date(it.createdAt).toLocaleDateString(undefined,{month:"short",day:"numeric"});p.className="pr";p.textContent=it.original.replace(/\s+/g," ").trim();w.className="nm";w.textContent=it.words+" w";b.append(d,p,w);
+  b.onclick=()=>{inp.value=it.original;count();show(it.result,0);$("studio").scrollIntoView({behavior:RM?"auto":"smooth"})};l.appendChild(b)})}
 $("q").addEventListener("input",e=>{q=e.target.value.trim().toLowerCase();paintH()});
-$("hc").onclick=()=>{try{localStorage.removeItem(HK)}catch(_){}paintH();insights(0);toast("History cleared")};
+$("hc").onclick=()=>{try{localStorage.removeItem(HK)}catch(_){}paintH();stats(0);toast("History cleared")};
 
-// sidebar highlight
-const navs=[...document.querySelectorAll(".nav[href^='#']")];
-if("IntersectionObserver"in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navs.forEach(n=>n.classList.toggle("on",n.getAttribute("href")==="#"+e.target.id))}),{rootMargin:"-40% 0px -50% 0px"});["studio","insights","history"].forEach(i=>io.observe($(i)))}
-
-// health
-async function health(){const d=$("hd"),l=$("hl"),m=$("hm");try{const c=new AbortController(),t=setTimeout(()=>c.abort(),5000),r=await fetch(API+"/health",{signal:c.signal});clearTimeout(t);if(!r.ok)throw 0;const h=await r.json();
- if(h.status==="ready"&&h.api_key_configured){d.className="dot on";l.textContent="Connected"}else{d.className="dot";l.textContent="Setup needed"}m.textContent=h.model||"Backend"}
- catch(_){d.className="dot off";l.textContent="Offline";m.textContent="Can't reach server"}}
-count();paintH();insights(0);health();setInterval(health,30000);
+async function health(){const d=$("hd"),l=$("hl");try{const c=new AbortController(),t=setTimeout(()=>c.abort(),5000),r=await fetch(API+"/health",{signal:c.signal});clearTimeout(t);if(!r.ok)throw 0;const h=await r.json();
+ if(h.status==="ready"&&h.api_key_configured){d.className="dot on";l.textContent="Connected"}else{d.className="dot";l.textContent="Setup needed"}l.title="Model: "+(h.model||"configured")}
+ catch(_){d.className="dot off";l.textContent="Offline";l.title="Can't reach "+API}}
+count();paintH();stats(0);health();setInterval(health,30000);
 })();
 </script>
 </body>
