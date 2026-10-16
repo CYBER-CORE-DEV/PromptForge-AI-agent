@@ -202,7 +202,7 @@ if(FINE&&!RM)document.querySelectorAll(".tilt").forEach(c=>{c.addEventListener("
 const navs=[...document.querySelectorAll("nav a")];
 if(CAN_IO){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navs.forEach(n=>n.classList.toggle("on",n.getAttribute("href")==="#"+e.target.id))}),{rootMargin:"-40% 0px -50% 0px"});["studio","stats","history"].forEach(i=>o.observe($(i)))}
 
-/* ---------- app ---------- */
+/* ---------- app ---------- *
 const inp=$("inp"),go=$("go"),out=$("out"),KEYS=["final","structural","depth_and_edge_cases","formatting_and_precision"];
 let last=null,tab="final",tt,pt,ty,q="";
 const wc=s=>(s||"").trim().split(/\s+/).filter(Boolean).length;
