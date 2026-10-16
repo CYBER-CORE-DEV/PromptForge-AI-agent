@@ -16,12 +16,15 @@ Optional environment variables:
 
 The Python API server and all three agents live in this one file. A .env file is
 optional but recommended for local development; API keys must never be put in frontend code.
+
+Output format: every stage returns plain, human-readable text (no Markdown symbols).
 """
 
 from __future__ import annotations
 
 import logging
 import os
+import re
 from pathlib import Path
 from typing import TypedDict
 
@@ -105,6 +108,53 @@ def allowed_frontend_origins() -> list[str]:
 
 
 # ---------------------------------------------------------------------------
+# Plain-text clean-up (safety net for the "human readable plain format" rule)
+# ---------------------------------------------------------------------------
+
+_FENCE = re.compile(r"^[ \t]*(```|~~~)[^\n]*\n?", re.M)
+_HEADING = re.compile(r"^[ \t]{0,3}#{1,6}[ \t]*", re.M)
+_RULE = re.compile(r"^[ \t]*([-*_])([ \t]*\1){2,}[ \t]*$", re.M)
+_TABLE_SEP = re.compile(r"^[ \t]*\|?[ \t]*:?-{3,}:?[ \t]*(\|[ \t]*:?-{3,}:?[ \t]*)*\|?[ \t]*$", re.M)
+_QUOTE = re.compile(r"^[ \t]*>[ \t]?", re.M)
+_BULLET = re.compile(r"^([ \t]*)[*\u2022+][ \t]+", re.M)
+_BOLD = re.compile(r"\*\*(.+?)\*\*")
+_ITALIC = re.compile(r"(?<![\w*])\*(?![\s*])([^*\n]+?)(?<![\s*])\*(?![\w*])")
+_STRIKE = re.compile(r"~~(.+?)~~")
+_LINK = re.compile(r"\[([^\]\n]+)\]\((https?://[^)\s]+)\)")
+_BLANKS = re.compile(r"\n{3,}")
+
+
+def to_plain_text(text: str) -> str:
+    """Strip Markdown syntax so the result reads as ordinary plain text.
+
+    The agents are instructed to write plain text already; this guarantees the
+    final output stays clean even if a model slips back into Markdown habits.
+    """
+    text = text.replace("\r\n", "\n")
+    text = _FENCE.sub("", text)
+    text = _TABLE_SEP.sub("", text)
+    lines = []
+    for line in text.split("\n"):
+        stripped = line.strip()
+        if stripped.startswith("|") and stripped.count("|") >= 2:
+            cells = [cell.strip() for cell in stripped.strip("|").split("|")]
+            line = "- " + "; ".join(cell for cell in cells if cell)
+        lines.append(line)
+    text = "\n".join(lines)
+    text = _HEADING.sub("", text)
+    text = _RULE.sub("", text)
+    text = _QUOTE.sub("", text)
+    text = _BULLET.sub(r"\1- ", text)
+    text = _LINK.sub(r"\1 (\2)", text)
+    text = _BOLD.sub(r"\1", text)
+    text = _ITALIC.sub(r"\1", text)
+    text = _STRIKE.sub(r"\1", text)
+    text = text.replace("`", "")
+    text = "\n".join(line.rstrip() for line in text.split("\n"))
+    return _BLANKS.sub("\n\n", text).strip()
+
+
+# ---------------------------------------------------------------------------
 # Groq model and three-agent LangGraph workflow
 # ---------------------------------------------------------------------------
 
@@ -137,7 +187,7 @@ def get_llm():
 
 
 def response_text(response) -> str:
-    """Normalize a LangChain AI message into plain text and reject empty results."""
+    """Normalize a LangChain AI message into clean plain text and reject empty results."""
     content = getattr(response, "content", response)
     if content is None:
         result = ""
@@ -158,6 +208,7 @@ def response_text(response) -> str:
     else:
         result = str(content).strip()
 
+    result = to_plain_text(result)
     if not result or result.lower() == "none":
         raise RuntimeError("The model returned an empty response.")
     return result
@@ -181,7 +232,17 @@ General rules for improving the user's prompt:
 - Do not request hidden chain-of-thought. Ask for concise explanations, assumptions, and verification steps.
 - Avoid repeated instructions, unrelated features, and unnecessary dependencies.
 - Return only the revised prompt, without commentary about the revision.
-- The output should be in the human readable format no other format should be used.
+
+Output format (strict): write in plain, human-readable text, the way a thoughtful person would write
+a clear message to a colleague.
+- Do not use Markdown or any markup: no # headings, no ** or * for emphasis, no backticks or code
+  fences, no tables or pipe characters, no horizontal rules, no quote markers, no emojis.
+- Use short paragraphs separated by one blank line.
+- For sections, write a short plain label on its own line ending with a colon, for example
+  "Goal:", "Context:", "Requirements:", "Output format:", then the content on the lines below it.
+- For lists, put each item on its own line starting with "1.", "2.", "3." for ordered steps, or
+  "- " for unordered items. Keep each item to one or two sentences.
+- Use JSON, code, or any other format only when the user's request explicitly asks for it.
 """.strip()
 
 
@@ -245,9 +306,11 @@ preserves the user's goal, constraints, and deliverable; distinguishes known fac
 contains relevant, actionable requirements; includes acceptance criteria where useful; and has no
 contradictions, invented capabilities, or duplicated rules.
 
-Strictly return the output in the human readable text and no other format unless specified by the user. Do not claim tests were run when
-they were not, and do not request hidden chain-of-thought. Use concise Markdown when appropriate. Return
-only the final prompt, without a preamble or self-evaluation.
+Your final output must read naturally to a person: plain text only, with clear short paragraphs, simple
+labeled sections, and simple numbered or dashed lists, exactly as described in the output format rules
+below. Remove any Markdown symbols left over from earlier drafts. Do not claim tests were run when they
+were not, and do not request hidden chain-of-thought. Return only the final prompt, without a preamble
+or self-evaluation.
 
 {SHARED_RULES}
 """.strip()
