@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1f1a5e">
 <meta name="description" content="PromptForge turns rough ideas into clear, ready-to-use prompts.">
 <title>PromptForge</title>
-<script>document.documentElement.className="js"</script>
+<script>(function(d){var r=d.documentElement,m="auto";r.className="js";try{m=localStorage.getItem("pf.fx")||"auto"}catch(e){}
+window.__pfPick=function(m){var c=navigator.connection||{},mem=navigator.deviceMemory||8,k=navigator.hardwareConcurrency||8;if(matchMedia("(prefers-reduced-motion:reduce)").matches)return"off";if(m!=="auto")return m;if(c.saveData||/2g$/.test(c.effectiveType||"")||mem<=2)return"off";if(mem<=4||k<=4||(matchMedia("(pointer:coarse)").matches&&innerWidth<600))return"lite";return"full"};r.dataset.fx=window.__pfPick(m)})(document)</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&display=swap"></noscript>
 <style>
 :root{--ink:#1b1340;--pk:#ff5fa2;--sk:#4fd1ff;--sun:#ffd23f;--mt:#5eead4;--vi:#7c5cff;--pp:#fff9f0;--b:3px solid var(--ink);--hs:5px 5px 0 var(--ink);--h:"Dela Gothic One","Hiragino Maru Gothic ProN","Arial Rounded MT Bold",Impact,sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -17,18 +18,18 @@ button,input,textarea{font:inherit;color:inherit}button{cursor:pointer;backgroun
 :focus-visible{outline:3px dashed var(--sun);outline-offset:3px}[hidden]{display:none!important}
 /* sky + parallax layers */
 .sky{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,#1f1a5e 0%,#5b3cc4 30%,#ff5fa2 70%,#ffb86b 100%)}
-.rays{position:absolute;left:50%;top:34%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;background:repeating-conic-gradient(rgba(255,255,255,.08) 0 5deg,transparent 5deg 14deg);animation:spin 90s linear infinite}
+.rays{position:absolute;left:50%;top:34%;width:130vmax;height:130vmax;margin:-65vmax 0 0 -65vmax;background:repeating-conic-gradient(rgba(255,255,255,.08) 0 5deg,transparent 5deg 14deg);animation:spin 90s linear infinite}
 .layer{position:absolute;left:0;right:0;will-change:transform;transform:translate3d(0,calc(var(--sy,0)*var(--sp)*-1px),0)}
 .stars{top:-30%;bottom:20%;opacity:.9;background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(1.5px 1.5px at 95px 85px,#fff,transparent),radial-gradient(2.5px 2.5px at 150px 20px,#ffd23f,transparent);background-size:180px 120px}
 .clouds{bottom:-18%;height:48%;opacity:.92;background:radial-gradient(70px 46px at 12% 70%,#fff 97%,transparent) 0 0/360px 150px repeat-x,radial-gradient(90px 56px at 62% 80%,#ffe3f1 97%,transparent) 0 20px/430px 170px repeat-x}
 @supports(animation-timeline:scroll()){.layer{animation:par linear both;animation-timeline:scroll(root);transform:none}@keyframes par{to{transform:translate3d(0,calc(var(--sp)*-1500px),0)}}}
-html.noanim .layer,html.noanim .rays{animation:none;transform:none}
+html[data-fx=lite] .layer,html[data-fx=off] .layer{animation:none!important;transform:none!important}html[data-fx=lite] .rays,html[data-fx=off] .rays,html[data-fx=off] .art img,html[data-fx=off] .sk{animation:none}html[data-fx=off] .petals{display:none}html[data-fx=lite] .petals i:nth-child(n+7){display:none}html[data-fx=lite] .btn::after,html[data-fx=off] .btn::after{display:none}html.paused *,html.paused *::before,html.paused *::after{animation-play-state:paused!important}
 .petals{position:absolute;inset:0;pointer-events:none}.petals i{position:absolute;top:-5vh;width:var(--w);height:var(--w);border-radius:150% 0 150% 0;background:#ffc2de;opacity:.85;animation:fall var(--d) linear infinite}
 @keyframes fall{from{transform:translate3d(0,-8vh,0) rotate(0)}to{transform:translate3d(var(--dx),112vh,0) rotate(560deg)}}
 @keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{transform:translateY(-14px) rotate(2deg)}}
 @keyframes pop{from{opacity:0;transform:translateY(34px) scale(.6) rotate(-7deg)}}@keyframes twink{50%{transform:scale(.4) rotate(45deg);opacity:.5}}
 /* header + nav */
-.site-head{position:sticky;top:0;z-index:30;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:10px clamp(12px,4vw,40px);background:rgba(255,249,240,.94);border-bottom:var(--b);backdrop-filter:blur(8px)}
+.site-head{position:sticky;top:0;z-index:30;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:10px max(clamp(12px,4vw,40px),env(safe-area-inset-right)) 10px max(clamp(12px,4vw,40px),env(safe-area-inset-left));background:rgba(255,249,240,.97);border-bottom:var(--b)}html[data-fx=full] .site-head{background:rgba(255,249,240,.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .logo{display:flex;align-items:center;gap:10px;margin-right:auto;font:400 20px var(--h);color:var(--ink);text-decoration:none}
 .logo img{width:38px;height:38px;border:var(--b);border-radius:12px;background:var(--sun);padding:3px;transform:rotate(-6deg);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}.logo:hover img{transform:rotate(10deg) scale(1.15)}
 nav ul{display:flex;gap:8px;list-style:none;margin:0;padding:0}
@@ -40,9 +41,9 @@ nav a:hover{transform:translateY(-2px) rotate(-3deg);background:var(--sun)}nav a
 /* hero */
 .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:center;padding:clamp(28px,6vw,72px) 0 28px}
 h1{margin:0 0 16px;font:400 clamp(34px,7vw,74px)/1.06 var(--h);color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 6px 0 var(--ink)}
-h1 span{display:inline-block}html.js:not(.noanim) h1 span{animation:pop .7s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i)*.1s)}
+h1 span{display:inline-block}html.js:not([data-fx=off]) h1 span{animation:pop .7s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i)*.1s)}
 .lead{max-width:34em;margin:0 0 22px;padding:12px 16px;background:var(--pp);border:var(--b);border-radius:18px;box-shadow:var(--hs);font-weight:800}
-.art{position:relative;justify-self:center;width:min(78%,320px)}.art img{display:block;width:100%;height:auto;animation:float 4s ease-in-out infinite;filter:drop-shadow(6px 8px 0 rgba(27,19,64,.45))}
+.art{position:relative;justify-self:center;width:min(78%,320px)}.art img{display:block;width:100%;height:auto;animation:float 4s ease-in-out infinite}.art::after{content:"";display:block;width:62%;height:14px;margin:10px auto 0;border-radius:50%;background:rgba(27,19,64,.35)}
 .bub{position:absolute;top:-4%;left:-12%;padding:6px 14px;background:#fff;border:var(--b);border-radius:18px;font-weight:800;font-size:14px;box-shadow:3px 3px 0 var(--ink);transform:rotate(-6deg)}
 .bub::after{content:"";position:absolute;left:24px;bottom:-12px;border:8px solid transparent;border-top:12px solid var(--ink)}
 .sk{position:absolute;width:22px;height:22px;background:var(--sun);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:twink 2.2s ease-in-out infinite}.sk.a{right:-4%;top:10%}.sk.b{left:2%;bottom:6%;animation-delay:-1s;background:var(--mt)}
@@ -91,7 +92,12 @@ footer{padding:22px 16px 34px;text-align:center;background:var(--pp);border-top:
 .spk{position:fixed;z-index:70;width:14px;height:14px;background:var(--sun);pointer-events:none;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
 /* scroll entrance */
 .rv{transition:opacity .7s,transform .7s cubic-bezier(.2,1.3,.3,1)}.rv.in.tilt{transition:transform .2s ease-out}
-html.js:not(.noanim) .rv:not(.in){opacity:0;transform:translateY(46px) skewY(3deg)}
+html.js:not([data-fx=off]) .rv:not(.in){opacity:0;transform:translateY(46px) skewY(3deg)}
+button,a,input,textarea,label{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+footer{padding-bottom:max(34px,env(safe-area-inset-bottom))}footer .lk{margin-left:12px}.toast{bottom:max(24px,calc(env(safe-area-inset-bottom) + 12px))}
+@media(pointer:coarse){.chip,.tb,.tab,nav a,.lk{min-height:44px;display:inline-flex;align-items:center;justify-content:center}.hrow{min-height:48px}}
+@media(min-width:1600px){.wrap{max-width:1360px}body{font-size:17px}}
+@media(max-height:480px) and (orientation:landscape){.hero{padding-top:20px}.site-head{position:static}}
 @media(max-width:820px){.hero{grid-template-columns:1fr;text-align:center}.lead{margin-inline:auto}.art{order:-1;width:min(60%,240px)}}
 @media(max-width:640px){nav{order:3;width:100%}nav ul{overflow-x:auto;padding-bottom:6px}h1{-webkit-text-stroke:2px var(--ink);text-shadow:3px 4px 0 var(--ink)}.card{padding:16px;box-shadow:5px 5px 0 var(--ink)}.hrow{grid-template-columns:minmax(0,1fr) auto}.hrow small{display:none}}
 @media(max-width:360px){.logo{font-size:17px}.btn{padding-inline:16px;font-size:16px}.pill span{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
@@ -102,7 +108,7 @@ html.js:not(.noanim) .rv:not(.in){opacity:0;transform:translateY(46px) skewY(3de
 <div class="sky" aria-hidden="true"><div class="rays"></div><div class="layer stars" style="--sp:.05"></div><div class="layer clouds" style="--sp:.14"></div><div class="petals" id="petals"></div></div>
 
 <header class="site-head">
-  <a class="logo" href="#top"><img alt="" width="38" height="38" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3l5 12 13 1-10 8 3 13-11-7-11 7 3-13L2 16l13-1z' fill='%23ff5fa2' stroke='%231b1340' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" data-src="assets/placeholder-icon-1.svg">PromptForge</a>
+  <a class="logo" href="#top"><img alt="" width="38" height="38" decoding="async" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3l5 12 13 1-10 8 3 13-11-7-11 7 3-13L2 16l13-1z' fill='%23ff5fa2' stroke='%231b1340' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" data-src="assets/placeholder-icon-1.svg">PromptForge</a>
   <nav aria-label="Primary"><ul><li><a class="on" href="#studio">Studio</a></li><li><a href="#stats">Stats</a></li><li><a href="#history">History</a></li></ul></nav>
   <div class="pill" aria-live="polite"><i class="dot" id="hd"></i><span id="hl">Connecting</span></div>
 </header>
@@ -116,7 +122,7 @@ html.js:not(.noanim) .rv:not(.in){opacity:0;transform:translateY(46px) skewY(3de
       <a class="btn" href="#studio">Start the ritual</a>
     </div>
     <div class="art"><span class="bub">Let's polish it!</span><span class="sk a"></span><span class="sk b"></span>
-      <img alt="Forge-chan, the PromptForge mascot" width="320" height="320" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M40 70L60 20 85 60 100 10 115 60 140 20 160 70Z' fill='%23ffd23f' stroke='%231b1340' stroke-width='6' stroke-linejoin='round'/%3E%3Ccircle cx='100' cy='120' r='70' fill='%23ffc2de' stroke='%231b1340' stroke-width='6'/%3E%3Cellipse cx='72' cy='115' rx='14' ry='20' fill='%23fff' stroke='%231b1340' stroke-width='5'/%3E%3Cellipse cx='128' cy='115' rx='14' ry='20' fill='%23fff' stroke='%231b1340' stroke-width='5'/%3E%3Ccircle cx='74' cy='120' r='9' fill='%231b1340'/%3E%3Ccircle cx='130' cy='120' r='9' fill='%231b1340'/%3E%3Ccircle cx='70' cy='112' r='4' fill='%23fff'/%3E%3Ccircle cx='126' cy='112' r='4' fill='%23fff'/%3E%3Cellipse cx='52' cy='145' rx='11' ry='6' fill='%23ff5fa2' opacity='.6'/%3E%3Cellipse cx='148' cy='145' rx='11' ry='6' fill='%23ff5fa2' opacity='.6'/%3E%3Cpath d='M88 148Q100 160 112 148' fill='none' stroke='%231b1340' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" data-src="assets/placeholder-image-1.png"></div>
+      <img alt="Forge-chan, the PromptForge mascot" width="320" height="320" decoding="async" fetchpriority="high" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M40 70L60 20 85 60 100 10 115 60 140 20 160 70Z' fill='%23ffd23f' stroke='%231b1340' stroke-width='6' stroke-linejoin='round'/%3E%3Ccircle cx='100' cy='120' r='70' fill='%23ffc2de' stroke='%231b1340' stroke-width='6'/%3E%3Cellipse cx='72' cy='115' rx='14' ry='20' fill='%23fff' stroke='%231b1340' stroke-width='5'/%3E%3Cellipse cx='128' cy='115' rx='14' ry='20' fill='%23fff' stroke='%231b1340' stroke-width='5'/%3E%3Ccircle cx='74' cy='120' r='9' fill='%231b1340'/%3E%3Ccircle cx='130' cy='120' r='9' fill='%231b1340'/%3E%3Ccircle cx='70' cy='112' r='4' fill='%23fff'/%3E%3Ccircle cx='126' cy='112' r='4' fill='%23fff'/%3E%3Cellipse cx='52' cy='145' rx='11' ry='6' fill='%23ff5fa2' opacity='.6'/%3E%3Cellipse cx='148' cy='145' rx='11' ry='6' fill='%23ff5fa2' opacity='.6'/%3E%3Cpath d='M88 148Q100 160 112 148' fill='none' stroke='%231b1340' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" data-src="assets/placeholder-image-1.png"></div>
   </section>
 
   <section class="panels" id="studio" aria-label="Prompt studio">
@@ -167,19 +173,20 @@ html.js:not(.noanim) .rv:not(.in){opacity:0;transform:translateY(46px) skewY(3de
       <div class="hlist" id="hlist"></div><p style="margin:12px 0 0;text-align:right"><button class="lk" id="hc" type="button">Clear all</button></p></div>
   </section>
 </main>
-<footer>PromptForge. Your prompts go only to the backend you run.</footer>
+<footer>PromptForge. Your prompts go only to the backend you run.<button class="lk" id="fx" type="button" aria-label="Change animation level">Effects: auto</button></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (()=>{"use strict";
 // Change this when you deploy the backend. Set USE_ASSETS to true once the files in assets/ exist.
-const API="https://promptforge-ai-agent.onrender.com",MAX=8000,HK="promptforge.history.v1",MH=20,TMO=120000,USE_ASSETS=false;
+const API="https://promptforge-ai-agent.onrender.com"",MAX=8000,HK="promptforge.history.v1",MH=20,TMO=120000,USE_ASSETS=false;
 const $=id=>document.getElementById(id),root=document.documentElement;
 const RM=matchMedia("(prefers-reduced-motion:reduce)").matches,CAN_ANIM=typeof Element.prototype.animate==="function",CAN_IO="IntersectionObserver"in window,CAN_ST=!!(window.CSS&&CSS.supports&&CSS.supports("animation-timeline","scroll()")),FINE=matchMedia("(hover:hover) and (pointer:fine)").matches;
 // Simple console-error check: add ?debug to the URL to log a summary after load.
 const errs=[];addEventListener("error",e=>errs.push(e.message));
 if(/[?&]debug/.test(location.search))addEventListener("load",()=>setTimeout(()=>console.info("PromptForge debug: "+errs.length+" runtime error(s) captured"),2500));
-if(RM)root.classList.add("noanim");
+let mode="auto";try{mode=localStorage.getItem("pf.fx")||"auto"}catch(_){}
+const fx=()=>root.dataset.fx;
 
 // optional real artwork (placeholders live in assets/); falls back to the built-in art on error
 if(USE_ASSETS)document.querySelectorAll("img[data-src]").forEach(i=>{const f=i.src;i.onerror=()=>{i.onerror=null;i.src=f};i.src=i.dataset.src});
@@ -187,11 +194,11 @@ if(USE_ASSETS)document.querySelectorAll("img[data-src]").forEach(i=>{const f=i.s
 /* ---------- animation layer (each effect degrades on its own) ---------- */
 const rv=[...document.querySelectorAll(".rv")];
 if(CAN_IO&&!RM){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1});rv.forEach(el=>io.observe(el))}else rv.forEach(el=>el.classList.add("in"));
-if(!CAN_ST&&!RM){let t=false;addEventListener("scroll",()=>{if(!t){t=true;requestAnimationFrame(()=>{root.style.setProperty("--sy",scrollY|0);t=false})}},{passive:true})}
+if(!CAN_ST&&!RM){let t=false;addEventListener("scroll",()=>{if(!t&&fx()==="full"){t=true;requestAnimationFrame(()=>{root.style.setProperty("--sy",scrollY|0);t=false})}},{passive:true})}
 if(!RM){const p=$("petals");for(let i=0;i<14;i++){const s=document.createElement("i");s.style.cssText=`left:${Math.random()*100}%;--dx:${Math.random()*30-15}vw;--d:${10+Math.random()*9}s;--w:${10+Math.random()*10}px;animation-delay:${-Math.random()*16}s`;p.appendChild(s)}}
-function burst(x,y){if(!CAN_ANIM||RM)return;for(let i=0;i<9;i++){const s=document.createElement("i");s.className="spk";s.style.left=x+"px";s.style.top=y+"px";document.body.appendChild(s);const a=i/9*6.283,r=36+Math.random()*44;s.animate([{transform:"translate(-50%,-50%) scale(1) rotate(0)",opacity:1},{transform:`translate(calc(-50% + ${Math.cos(a)*r}px),calc(-50% + ${Math.sin(a)*r}px)) scale(.2) rotate(200deg)`,opacity:0}],{duration:650,easing:"cubic-bezier(.2,.8,.3,1)"}).onfinish=()=>s.remove()}}
+function burst(x,y){if(!CAN_ANIM||RM||fx()!=="full")return;for(let i=0;i<9;i++){const s=document.createElement("i");s.className="spk";s.style.left=x+"px";s.style.top=y+"px";document.body.appendChild(s);const a=i/9*6.283,r=36+Math.random()*44;s.animate([{transform:"translate(-50%,-50%) scale(1) rotate(0)",opacity:1},{transform:`translate(calc(-50% + ${Math.cos(a)*r}px),calc(-50% + ${Math.sin(a)*r}px)) scale(.2) rotate(200deg)`,opacity:0}],{duration:650,easing:"cubic-bezier(.2,.8,.3,1)"}).onfinish=()=>s.remove()}}
 document.addEventListener("click",e=>{const b=e.target.closest(".btn,.chip,.tb");if(!b)return;let x=e.clientX,y=e.clientY;if(!x&&!y){const r=b.getBoundingClientRect();x=r.left+r.width/2;y=r.top+r.height/2}burst(x,y)});
-if(FINE&&!RM)document.querySelectorAll(".tilt").forEach(c=>{c.addEventListener("pointermove",e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(900px) rotateY(${x*6}deg) rotateX(${-y*6}deg)`});c.addEventListener("pointerleave",()=>{c.style.transform=""})});
+if(FINE&&!RM)document.querySelectorAll(".tilt").forEach(c=>{c.addEventListener("pointermove",e=>{if(fx()!=="full")return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(900px) rotateY(${x*6}deg) rotateX(${-y*6}deg)`});c.addEventListener("pointerleave",()=>{c.style.transform=""})});
 const navs=[...document.querySelectorAll("nav a")];
 if(CAN_IO){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navs.forEach(n=>n.classList.toggle("on",n.getAttribute("href")==="#"+e.target.id))}),{rootMargin:"-40% 0px -50% 0px"});["studio","stats","history"].forEach(i=>o.observe($(i)))}
 
@@ -202,8 +209,8 @@ const wc=s=>(s||"").trim().split(/\s+/).filter(Boolean).length;
 const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2400)};
 function cu(el,to,dec=0){const from=parseFloat(el.dataset.v||0);el.dataset.v=to;if(RM){el.textContent=to.toFixed(dec);return}const t0=performance.now(),f=n=>{const p=Math.min(1,(n-t0)/700),e=1-Math.pow(1-p,3);el.textContent=(from+(to-from)*e).toFixed(dec);if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
 function fit(){inp.style.height="auto";inp.style.height=Math.max(210,Math.min(inp.scrollHeight,innerHeight*.5))+"px"}
-function count(){const n=inp.value.length,c=$("cn");c.textContent=n.toLocaleString()+" / "+MAX.toLocaleString();c.className=n>=MAX?"b":n>MAX*.9?"w":"";fit()}
-inp.addEventListener("input",count);
+function count(skip){const n=inp.value.length,c=$("cn");c.textContent=n.toLocaleString()+" / "+MAX.toLocaleString();c.className=n>=MAX?"b":n>MAX*.9?"w":"";if(!skip)fit()}
+let fr=0;inp.addEventListener("input",()=>{count(true);if(!fr)fr=requestAnimationFrame(()=>{fr=0;fit()})});
 const showErr=m=>{const e=$("err");e.hidden=false;e.textContent=m},clrErr=()=>{$("err").hidden=true};
 
 function pipe(on){const s=[...document.querySelectorAll(".st")];clearInterval(pt);$("steps").hidden=!on;if(!on)return;let i=0;
@@ -212,7 +219,7 @@ function busy(b){go.disabled=b;go.classList.toggle("l",b);$("gl").textContent=b?
  if(b){clrErr();$("empty").hidden=true;$("done").hidden=true;if(matchMedia("(max-width:820px)").matches)$("steps").scrollIntoView({behavior:RM?"auto":"smooth",block:"center"})}pipe(b)}
 
 const text=k=>!last?"":k==="final"?last.enhanced_prompt:(last.stages?.[k]||"No text returned for this stage.");
-function render(anim){cancelAnimationFrame(ty);const t=text(tab);out.className="out";if(!anim||RM||t.length>5000){out.textContent=t;return}
+function render(anim){cancelAnimationFrame(ty);const t=text(tab);out.className="out";if(!anim||RM||fx()!=="full"||t.length>5000){out.textContent=t;return}
  out.classList.add("c");let i=0;const n=Math.max(4,Math.ceil(t.length/120)),f=()=>{i=Math.min(t.length,i+n);out.textContent=t.slice(0,i);if(i<t.length)ty=requestAnimationFrame(f);else out.classList.remove("c")};f()}
 function setTab(k){tab=k;document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.k===k)));render(false)}
 $("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(b)setTab(b.dataset.k)});
@@ -255,7 +262,15 @@ $("hc").onclick=()=>{try{localStorage.removeItem(HK)}catch(_){}paintH();stats(0)
 async function health(){const d=$("hd"),l=$("hl");try{const c=new AbortController(),t=setTimeout(()=>c.abort(),5000),r=await fetch(API+"/health",{signal:c.signal});clearTimeout(t);if(!r.ok)throw 0;const h=await r.json();
  if(h.status==="ready"&&h.api_key_configured){d.className="dot on";l.textContent="Connected"}else{d.className="dot";l.textContent="Setup needed"}l.title="Model: "+(h.model||"configured")}
  catch(_){d.className="dot off";l.textContent="Offline";l.title="Can't reach "+API}}
-count();paintH();stats(0);health();setInterval(health,30000);
+count();paintH();stats(0);health();
+// adaptive performance: pick a tier up front, verify it with a short frame-time probe, pause work when hidden
+let tier=fx();
+function probe(){if(mode!=="auto"||tier==="off"||document.hidden)return;const d=[];let prev=0;const f=t=>{if(prev)d.push(t-prev);prev=t;if(d.length<50&&!document.hidden)requestAnimationFrame(f);else if(d.length>=30){d.sort((a,b)=>a-b);if(d[d.length>>1]>22){tier=tier==="full"?"lite":"off";root.dataset.fx=tier;setTimeout(probe,2500)}}};requestAnimationFrame(f)}
+addEventListener("load",()=>setTimeout(probe,1500));
+const fxb=$("fx"),MODES=["auto","full","lite","off"],lab=()=>{fxb.textContent="Effects: "+mode};lab();
+fxb.onclick=()=>{mode=MODES[(MODES.indexOf(mode)+1)%4];try{localStorage.setItem("pf.fx",mode)}catch(_){}tier=window.__pfPick(mode);root.dataset.fx=tier;lab();toast("Effects: "+mode);if(mode==="auto")setTimeout(probe,800)};
+document.addEventListener("visibilitychange",()=>{root.classList.toggle("paused",document.hidden);if(!document.hidden)health()});
+setInterval(()=>{if(!document.hidden)health()},30000);
 })();
 </script>
 </body>
