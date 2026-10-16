@@ -181,6 +181,7 @@ General rules for improving the user's prompt:
 - Do not request hidden chain-of-thought. Ask for concise explanations, assumptions, and verification steps.
 - Avoid repeated instructions, unrelated features, and unnecessary dependencies.
 - Return only the revised prompt, without commentary about the revision.
+- The output should be in the human readable format no other format should be used.
 """.strip()
 
 
@@ -244,7 +245,7 @@ preserves the user's goal, constraints, and deliverable; distinguishes known fac
 contains relevant, actionable requirements; includes acceptance criteria where useful; and has no
 contradictions, invented capabilities, or duplicated rules.
 
-Preserve exact output requirements such as "JSON only" or "code only". Do not claim tests were run when
+Strictly return the output in the human readable text and no other format unless specified by the user. Do not claim tests were run when
 they were not, and do not request hidden chain-of-thought. Use concise Markdown when appropriate. Return
 only the final prompt, without a preamble or self-evaluation.
 
