@@ -88,7 +88,7 @@ textarea:focus{outline:0;box-shadow:5px 5px 0 var(--sk);transform:translate(-2px
 .hl-card{margin-bottom:34px}.search{display:flex;align-items:center;gap:8px;margin:12px 0;padding:0 14px;height:44px;border:var(--b);border-radius:14px;background:#fff}.search input{flex:1;min-width:0;border:0;background:none;outline:0}.search:focus-within{box-shadow:4px 4px 0 var(--sk)}
 .hlist{display:grid;gap:8px;max-height:360px;overflow:auto;padding:2px 6px 6px 2px}.hrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;text-align:left;padding:10px 14px;border:var(--b);border-radius:14px;background:#fff;transition:transform .15s,background .15s}.hrow:hover{background:var(--sun);transform:translateX(6px) rotate(-.5deg)}
 .hrow .pr{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hrow .nm{font:400 15px var(--h);color:var(--vi)}.hrow small{font-weight:800}.none{padding:8px 4px;font-weight:800}
-footer{padding:22px 16px 34px;text-align:center;background:var(--pp);border-top:var(--b);font-weight:800;font-size:14px}
+footer{padding:22px 16px 92px;text-align:center;background:var(--pp);border-top:var(--b);font-weight:800;font-size:14px}
 .toast{position:fixed;z-index:60;left:50%;bottom:24px;max-width:calc(100% - 24px);transform:translate(-50%,20px) scale(.9);opacity:0;pointer-events:none;padding:10px 20px;border:var(--b);border-radius:14px;background:var(--sun);font-weight:800;box-shadow:var(--hs);transition:.3s cubic-bezier(.3,1.6,.5,1)}.toast.show{opacity:1;transform:translate(-50%,0)}
 .spk{position:fixed;z-index:70;width:14px;height:14px;background:var(--sun);pointer-events:none;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
 /* support / buy me a coffee */
@@ -109,6 +109,14 @@ html[data-fx=lite] .sup .cup,html[data-fx=off] .sup .cup,html[data-fx=lite] .ste
 .shw{position:relative}.shm{position:absolute;left:0;bottom:calc(100% + 12px);z-index:6;min-width:220px;display:grid;gap:6px;padding:10px;background:#fff;border:var(--b);border-radius:16px;box-shadow:var(--hs);animation:shin .25s cubic-bezier(.3,1.5,.5,1) both}
 .shm a,.shm button{display:block;width:100%;text-align:left;padding:8px 14px;border:var(--b);border-radius:10px;background:var(--pp);color:var(--ink);font-weight:800;font-size:14px;text-decoration:none;transition:transform .15s,background .15s}.shm a:hover,.shm button:hover{background:var(--sun);transform:translateX(4px)}
 @keyframes shin{from{opacity:0;margin-bottom:-8px}}@media(max-width:640px){.shm{left:50%;margin-left:-110px}}
+.bmc{display:inline-block;line-height:0;animation:beat 2.4s ease-in-out infinite}.bmc:hover{animation:none}.bmc img{display:block;height:56px;width:auto;max-width:100%;border-radius:12px;transition:transform .15s}.bmc:hover img{transform:translateY(-3px) rotate(-2deg)}
+html[data-fx=lite] .bmc,html[data-fx=off] .bmc{animation:none}
+.bmc-top img{height:40px}.btn.sm{min-height:38px;padding:4px 16px;font-size:15px;box-shadow:3px 3px 0 var(--ink)}
+@media(max-width:480px){.pill #hl{display:none}.bmc-top img{height:34px}}
+.fab{position:fixed;right:18px;bottom:18px;z-index:9998;display:flex;flex-direction:row-reverse;align-items:flex-end;gap:10px;max-width:calc(100% - 36px)}
+.fab-btn{flex:none;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:#bd5fff;border:var(--b);box-shadow:var(--hs);animation:float 3.5s ease-in-out infinite;transition:transform .2s}.fab-btn:hover{transform:scale(1.1) rotate(-8deg);animation:none}
+.fab-msg{max-width:220px;padding:8px 14px;background:#fff;color:var(--ink);border:var(--b);border-radius:14px;font-weight:800;font-size:13px;line-height:1.4;box-shadow:3px 3px 0 var(--ink);animation:pop .5s .3s both}
+html[data-fx=lite] .fab-btn,html[data-fx=off] .fab-btn,html[data-fx=off] .fab-msg{animation:none}
 .acts{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.btn.alt{background:#fff;color:var(--ink)}
 @media(max-width:640px){.acts{justify-content:center}}
 /* scroll entrance */
@@ -130,8 +138,9 @@ footer{padding-bottom:max(34px,env(safe-area-inset-bottom))}footer .lk{margin-le
 
 <header class="site-head">
   <a class="logo" href="#top"><img alt="" width="38" height="38" decoding="async" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3l5 12 13 1-10 8 3 13-11-7-11 7 3-13L2 16l13-1z' fill='%23ff5fa2' stroke='%231b1340' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" data-src="assets/placeholder-icon-1.svg">PromptForge</a>
-  <nav aria-label="Primary"><ul><li><a class="on" href="#studio">Studio</a></li><li><a href="#stats">Stats</a></li><li><a href="#history">History</a></li><li><a class="love" href="#support">Support</a></li></ul></nav>
+  <nav aria-label="Primary"><ul><li><a class="on" href="#studio">Studio</a></li><li><a href="#stats">Stats</a></li><li><a href="#history">History</a></li></ul></nav>
   <div class="pill" aria-live="polite"><i class="dot" id="hd"></i><span id="hl">Connecting</span></div>
+  <a class="bmc bmc-top" id="bmc" href="https://www.buymeacoffee.com/sbdhar" target="_blank" rel="noopener noreferrer"><img id="bmc-img" src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&amp;emoji=&amp;slug=sbdhar&amp;button_colour=FFDD00&amp;font_colour=000000&amp;font_family=Cookie&amp;outline_colour=000000&amp;coffee_colour=ffffff" alt="Buy me a coffee" height="40"></a>
 </header>
 
 <main class="wrap" id="top">
@@ -202,7 +211,7 @@ footer{padding-bottom:max(34px,env(safe-area-inset-bottom))}footer .lk{margin-le
       <p>Hi, I'm Subhajit Dhar, the person behind PromptForge. I built it because a good idea shouldn't get lost just because the words came out messy. It's free, it has no ads, and I'd love to keep it that way.</p>
       <p>If it saved you time, sparked something, or made your day a little easier, a coffee would mean the world to me. It tells me this is worth building, and it keeps the updates coming.</p>
       <p><strong>Thank you for being here. Truly.</strong><br>With gratitude, Subhajit Dhar</p>
-      <div class="acts"><a class="btn coffee" href="https://buymeacoffee.com/sbdhar" target="_blank" rel="noopener noreferrer">Buy me a coffee</a><div class="shw"><button class="btn alt" id="sh" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="shm">Share PromptForge</button><div class="shm" id="shm" role="menu" hidden><a role="menuitem" href="https://wa.me/?text=Turn%20rough%20ideas%20into%20clear%2C%20ready-to-use%20prompts%20with%20PromptForge%3A%20https%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio" target="_blank" rel="noopener noreferrer">WhatsApp</a><a role="menuitem" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio" target="_blank" rel="noopener noreferrer">LinkedIn</a><a role="menuitem" href="https://twitter.com/intent/tweet?text=Turn%20rough%20ideas%20into%20clear%2C%20ready-to-use%20prompts%20with%20PromptForge%3A&url=https%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio" target="_blank" rel="noopener noreferrer">X (Twitter)</a><a role="menuitem" href="https://t.me/share/url?url=https%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio&text=Turn%20rough%20ideas%20into%20clear%2C%20ready-to-use%20prompts%20with%20PromptForge%3A" target="_blank" rel="noopener noreferrer">Telegram</a><a role="menuitem" href="mailto:?subject=PromptForge&body=Turn%20rough%20ideas%20into%20clear%2C%20ready-to-use%20prompts%20with%20PromptForge%3A%0A%0Ahttps%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio">Email</a><button role="menuitem" id="shc" type="button">Copy link</button><button role="menuitem" id="shn" type="button" hidden>More options</button></div></div></div>
+      <div class="acts"><a class="btn coffee" href="https://www.buymeacoffee.com/sbdhar" target="_blank" rel="noopener noreferrer">Buy me a coffee</a><div class="shw"><button class="btn alt" id="sh" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="shm">Share PromptForge</button><div class="shm" id="shm" role="menu" hidden><a role="menuitem" href="https://wa.me/?text=Turn%20rough%20ideas%20into%20clear%2C%20ready-to-use%20prompts%20with%20PromptForge%3A%20https%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio" target="_blank" rel="noopener noreferrer">WhatsApp</a><a role="menuitem" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio" target="_blank" rel="noopener noreferrer">LinkedIn</a><a role="menuitem" href="https://twitter.com/intent/tweet?text=Turn%20rough%20ideas%20into%20clear%2C%20ready-to-use%20prompts%20with%20PromptForge%3A&url=https%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio" target="_blank" rel="noopener noreferrer">X (Twitter)</a><a role="menuitem" href="https://t.me/share/url?url=https%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio&text=Turn%20rough%20ideas%20into%20clear%2C%20ready-to-use%20prompts%20with%20PromptForge%3A" target="_blank" rel="noopener noreferrer">Telegram</a><a role="menuitem" href="mailto:?subject=PromptForge&body=Turn%20rough%20ideas%20into%20clear%2C%20ready-to-use%20prompts%20with%20PromptForge%3A%0A%0Ahttps%3A%2F%2Fpromptforge-ai-agent-1.onrender.com%2F%23studio">Email</a><button role="menuitem" id="shc" type="button">Copy link</button><button role="menuitem" id="shn" type="button" hidden>More options</button></div></div></div>
       <p class="small" style="margin:12px 0 0">Every coffee, big or small, makes my day. No pressure, though: sharing PromptForge with a friend helps just as much.</p>
     </div>
   </section>
@@ -234,7 +243,7 @@ function burst(x,y){if(!CAN_ANIM||RM||fx()!=="full")return;for(let i=0;i<9;i++){
 document.addEventListener("click",e=>{const b=e.target.closest(".btn,.chip,.tb");if(!b)return;let x=e.clientX,y=e.clientY;if(!x&&!y){const r=b.getBoundingClientRect();x=r.left+r.width/2;y=r.top+r.height/2}burst(x,y)});
 if(FINE&&!RM)document.querySelectorAll(".tilt").forEach(c=>{c.addEventListener("pointermove",e=>{if(fx()!=="full")return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(900px) rotateY(${x*6}deg) rotateX(${-y*6}deg)`});c.addEventListener("pointerleave",()=>{c.style.transform=""})});
 const navs=[...document.querySelectorAll("nav a")];
-if(CAN_IO){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navs.forEach(n=>n.classList.toggle("on",n.getAttribute("href")==="#"+e.target.id))}),{rootMargin:"-40% 0px -50% 0px"});["studio","stats","history","support"].forEach(i=>o.observe($(i)))}
+if(CAN_IO){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navs.forEach(n=>n.classList.toggle("on",n.getAttribute("href")==="#"+e.target.id))}),{rootMargin:"-40% 0px -50% 0px"});["studio","stats","history"].forEach(i=>o.observe($(i)))}
 
 /* ---------- app ---------- */
 const inp=$("inp"),go=$("go"),out=$("out"),KEYS=["final","structural","depth_and_edge_cases","formatting_and_precision"];
@@ -266,6 +275,9 @@ const NK="pf.nudge",nudged=()=>{try{return sessionStorage.getItem(NK)}catch(_){r
 function nudge(){if(!nudged())$("nudge").hidden=false}
 $("nx").onclick=()=>{$("nudge").hidden=true;try{sessionStorage.setItem(NK,"1")}catch(_){}};
 const SHARE_URL="https://promptforge-ai-agent-1.onrender.com/#studio";
+const bi=$("bmc-img");
+function bmcFallback(){const a=$("bmc");a.className="btn coffee sm";a.textContent="Buy me a coffee"}
+if(bi){if(bi.complete&&!bi.naturalWidth)bmcFallback();bi.addEventListener("error",bmcFallback)}
 const SHARE_TEXT="Turn rough ideas into clear, ready-to-use prompts with PromptForge:",shb=$("sh"),shm=$("shm");
 function shOpen(o){shm.hidden=!o;shb.setAttribute("aria-expanded",String(o))}
 shb.onclick=e=>{e.stopPropagation();shOpen(shm.hidden)};
@@ -318,6 +330,25 @@ fxb.onclick=()=>{mode=MODES[(MODES.indexOf(mode)+1)%4];try{localStorage.setItem(
 document.addEventListener("visibilitychange",()=>{root.classList.toggle("paused",document.hidden);if(!document.hidden)health()});
 setInterval(()=>{if(!document.hidden)health()},30000);
 })();
+</script>
+<!-- Floating coffee button: shown only if the official widget below does not appear (blocked, offline or slow). -->
+<div class="fab" id="fab" hidden>
+  <div class="fab-msg" id="fab-msg">Thanks for visiting! Please consider buying me a coffee.</div>
+  <a class="fab-btn" href="https://www.buymeacoffee.com/sbdhar" target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h11v5a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5z"/><path d="M16 10h2a3 3 0 0 1 0 6h-2"/><path d="M8 3c-1 1.5 1 2 0 3.5M12 3c-1 1.5 1 2 0 3.5"/></svg></a>
+</div>
+<!-- Buy Me a Coffee floating widget. Keep this as the last script so it initialises on DOMContentLoaded. -->
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="sbdhar" data-description="Support me on Buy me a coffee!" data-message="Thanks for visiting! Please consider buying me a coffee." data-color="#BD5FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+<script>
+addEventListener("load",function(){
+  var has=function(){return document.querySelector('#bmc-wbtn,[id^="bmc-w"],iframe[src*="buymeacoffee"]')},n=0,kicked=false;
+  var t=setInterval(function(){n++;
+    if(has()){clearInterval(t);return}
+    if(n===2&&!kicked){kicked=true;try{window.dispatchEvent(new Event("DOMContentLoaded"))}catch(e){}}
+    if(n>=7){clearInterval(t);var f=document.getElementById("fab");if(!f)return;f.hidden=false;
+      setTimeout(function(){var m=document.getElementById("fab-msg");if(m)m.hidden=true},9000);
+      var mo=new MutationObserver(function(){if(has()){f.hidden=true;mo.disconnect()}});mo.observe(document.body,{childList:true,subtree:true})}
+  },500)
+});
 </script>
 </body>
 </html>
