@@ -222,7 +222,7 @@ footer{padding-bottom:max(34px,env(safe-area-inset-bottom))}footer .lk{margin-le
 <script>
 (()=>{"use strict";
 // Change this when you deploy the backend. Set USE_ASSETS to true once the files in assets/ exist.
-const API="https://promptforge-ai-agent.onrender.com",MAX=8000,HK="promptforge.history.v1",MH=20,TMO=120000,USE_ASSETS=false;
+const API="http://127.0.0.1:8000",MAX=8000,HK="promptforge.history.v1",MH=20,TMO=120000,USE_ASSETS=false;
 const $=id=>document.getElementById(id),root=document.documentElement;
 const RM=matchMedia("(prefers-reduced-motion:reduce)").matches,CAN_ANIM=typeof Element.prototype.animate==="function",CAN_IO="IntersectionObserver"in window,CAN_ST=!!(window.CSS&&CSS.supports&&CSS.supports("animation-timeline","scroll()")),FINE=matchMedia("(hover:hover) and (pointer:fine)").matches;
 // Simple console-error check: add ?debug to the URL to log a summary after load.
